@@ -1,0 +1,4 @@
+# UI scene files will be created in Godot Editor
+# - HUD.tscn
+# - Inventory.tscn
+# - MainMenu.tscn

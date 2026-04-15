@@ -1,0 +1,60 @@
+{
+	"chrono_rift_small": {
+		"id": "chrono_rift_small",
+		"name": "Small Chrono Rift",
+		"type": "consumable",
+		"description": "Restores 1 Chrono Rift charge. Use wisely.",
+		"icon_path": "res://assets/sprites/ui/item_chrono_rift_small.png",
+		"icon_color": "#9B59B6",
+		"stack_size": 5,
+		"effect": {
+			"type": "restore_chrono_rift",
+			"amount": 1
+		}
+	},
+	"chrono_dust": {
+		"id": "chrono_dust",
+		"name": "Chrono Dust",
+		"type": "material",
+		"description": "Mysterious dust that bends time. Used for crafting.",
+		"icon_path": "res://assets/sprites/ui/item_chrono_dust.png",
+		"icon_color": "#00FFFF",
+		"stack_size": 99,
+		"rarity": "uncommon"
+	},
+	"fire_crystal": {
+		"id": "fire_crystal",
+		"name": "Fire Crystal",
+		"type": "elemental_core",
+		"description": "A crystallized essence of fire element. Burns with eternal flame.",
+		"icon_path": "res://assets/sprites/ui/item_fire_crystal.png",
+		"icon_color": "#FF6600",
+		"stack_size": 10,
+		"element": "fire",
+		"rarity": "rare"
+	},
+	"iron_ore": {
+		"id": "iron_ore",
+		"name": "Iron Ore",
+		"type": "material",
+		"description": "Raw iron ore. Can be smelted into ingots.",
+		"icon_path": "res://assets/sprites/ui/item_iron_ore.png",
+		"icon_color": "#808080",
+		"stack_size": 50,
+		"rarity": "common"
+	},
+	"health_potion": {
+		"id": "health_potion",
+		"name": "Health Potion",
+		"type": "consumable",
+		"description": "Restores 50 HP instantly.",
+		"icon_path": "res://assets/sprites/ui/item_health_potion.png",
+		"icon_color": "#FF0000",
+		"stack_size": 10,
+		"effect": {
+			"type": "heal",
+			"amount": 50
+		},
+		"rarity": "common"
+	}
+}

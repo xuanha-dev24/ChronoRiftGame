@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://fl1joqxfpncn"]
+
+[ext_resource type="Script" path="res://scripts/enemies/earth_golem.gd" id="1_golem"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_golem"]
+radius = 12.0
+height = 36.0
+
+[node name="EarthGolem" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_golem")
+
+[node name="Sprite" type="ColorRect" parent="."]
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 18.0
+offset_bottom = 12.0
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_golem")
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = "120 / 120"
+horizontal_alignment = 1
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true

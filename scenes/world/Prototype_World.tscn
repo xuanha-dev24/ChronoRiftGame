@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c46q4y8kmds5j"]
+
+[ext_resource type="Script" uid="uid://eu4bts0wvipb" path="res://scripts/world/prototype_world.gd" id="1_gnmdo"]
+[ext_resource type="PackedScene" uid="uid://cvineru3wmjjq" path="res://scenes/player/player.tscn" id="2_cfmtj"]
+[ext_resource type="Script" uid="uid://bbqt5mtpim2gq" path="res://scripts/camera/smooth_camera.gd" id="4_cfmtj"]
+[ext_resource type="PackedScene" uid="uid://c8yv3qm5xwh2d" path="res://scenes/enemies/SlimeBasic.tscn" id="4_kew8u"]
+[ext_resource type="Script" uid="uid://cc76vsv33va11" path="res://scripts/enemies/slime_basic_poc.gd" id="4_my45k"]
+[ext_resource type="Script" uid="uid://brx1pk0s4ejsa" path="res://scripts/effects/effect_manager.gd" id="5_seqlo"]
+[ext_resource type="Script" uid="uid://ogtkk2cdcidk" path="res://scripts/ui/hud.gd" id="7_my45k"]
+[ext_resource type="PackedScene" uid="uid://fl1joqxfpncn" path="res://scenes/enemies/EarthGolem.tscn" id="8_04juh"]
+[ext_resource type="PackedScene" uid="uid://dfb5b0b0f0hs6" path="res://scenes/ui/Inventory_UI.tscn" id="9_yjpls"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orj3o"]
+radius = 12.0
+
+[node name="Prototype_World" type="Node2D" unique_id=1210916975]
+script = ExtResource("1_gnmdo")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1727061081]
+
+[node name="YSortRoot" type="Node2D" parent="." unique_id=1728085584]
+y_sort_enabled = true
+
+[node name="Player" parent="YSortRoot" unique_id=1161030008 groups=["player"] instance=ExtResource("2_cfmtj")]
+
+[node name="SlimeBasic" type="CharacterBody2D" parent="YSortRoot" unique_id=26899028]
+position = Vector2(437, 22)
+collision_layer = 2
+script = ExtResource("4_my45k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortRoot/SlimeBasic" unique_id=1374033238]
+position = Vector2(-266, -4)
+shape = SubResource("CircleShape2D_orj3o")
+
+[node name="Sprite" type="ColorRect" parent="YSortRoot/SlimeBasic" unique_id=1692941880]
+offset_right = 24.0
+offset_bottom = 20.0
+color = Color(0.9696694, 0.76978105, 0.8809718, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="HPLabel" type="Label" parent="YSortRoot/SlimeBasic" unique_id=1464495795]
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 23.0
+offset_bottom = -7.0
+text = "30/30"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SlimeBasic2" parent="YSortRoot" unique_id=809187320 instance=ExtResource("4_kew8u")]
+position = Vector2(74, 208)
+
+[node name="MainCamera" type="Camera2D" parent="." unique_id=1294377970 groups=["camera"]]
+script = ExtResource("4_cfmtj")
+
+[node name="EffectManager" type="Node" parent="." unique_id=342642706]
+script = ExtResource("5_seqlo")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1364320460]
+script = ExtResource("7_my45k")
+
+[node name="HPLabel" type="Label" parent="HUD" unique_id=1556322125]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 87.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 20
+text = "100/100"
+
+[node name="EarthGolem" parent="." unique_id=971151775 instance=ExtResource("8_04juh")]
+position = Vector2(-60, -77)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="Inventory_UI" parent="UILayer" unique_id=1749514861 instance=ExtResource("9_yjpls")]

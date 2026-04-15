@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://bp0qu5aa4473m"]
+
+[ext_resource type="Script" uid="uid://bcsm1csi6nek4" path="res://scripts/world/poc_world.gd" id="1_76d3q"]
+[ext_resource type="Script" uid="uid://cit5x2gxmw0pi" path="res://scripts/player/player_controller_poc.gd" id="2_xoelv"]
+[ext_resource type="Script" uid="uid://cqh8tnp4b7tbl" path="res://scripts/systems/chrono_rift_system_poc.gd" id="3_voi7x"]
+[ext_resource type="Script" uid="uid://cc76vsv33va11" path="res://scripts/enemies/slime_basic_poc.gd" id="4_jj8pj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp6q6"]
+radius = 8.0
+height = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_topl7"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0cegv"]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orj3o"]
+radius = 12.0
+
+[node name="POC_World" type="Node2D" unique_id=1210916975]
+script = ExtResource("1_76d3q")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1727061081]
+
+[node name="YSortRoot" type="Node2D" parent="." unique_id=1728085584]
+y_sort_enabled = true
+
+[node name="Player" type="CharacterBody2D" parent="YSortRoot" unique_id=50001339]
+script = ExtResource("2_xoelv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortRoot/Player" unique_id=1543691185]
+shape = SubResource("CapsuleShape2D_bp6q6")
+
+[node name="Sprite" type="ColorRect" parent="YSortRoot/Player" unique_id=1293612822]
+offset_left = -8.0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = 12.0
+color = Color(0.18039216, 1, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AttackArea" type="Area2D" parent="YSortRoot/Player" unique_id=110570341]
+collision_mask = 2
+
+[node name="CircleShape2D" type="CollisionShape2D" parent="YSortRoot/Player/AttackArea" unique_id=780714832]
+shape = SubResource("CircleShape2D_topl7")
+
+[node name="AttackCooldown" type="Timer" parent="YSortRoot/Player" unique_id=689328656]
+wait_time = 0.6
+one_shot = true
+
+[node name="ChronoRiftSystem" type="Node" parent="YSortRoot/Player" unique_id=1506548774]
+script = ExtResource("3_voi7x")
+
+[node name="CooldownTimer" type="Timer" parent="YSortRoot/Player/ChronoRiftSystem" unique_id=655505582]
+one_shot = true
+
+[node name="SlowArea" type="Area2D" parent="YSortRoot/Player/ChronoRiftSystem" unique_id=1838580775]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortRoot/Player/ChronoRiftSystem/SlowArea" unique_id=449118357]
+shape = SubResource("CircleShape2D_0cegv")
+
+[node name="SlowVisual" type="ColorRect" parent="YSortRoot/Player/ChronoRiftSystem" unique_id=872893275]
+visible = false
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0, 1, 1, 0.3)
+
+[node name="SlimeBasic" type="CharacterBody2D" parent="YSortRoot" unique_id=26899028]
+position = Vector2(720, 360)
+collision_layer = 2
+script = ExtResource("4_jj8pj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortRoot/SlimeBasic" unique_id=1374033238]
+shape = SubResource("CircleShape2D_orj3o")
+
+[node name="Sprite" type="ColorRect" parent="YSortRoot/SlimeBasic" unique_id=1692941880]
+offset_right = 24.0
+offset_bottom = 20.0
+color = Color(0.9696694, 0.76978105, 0.8809718, 1)
+
+[node name="HPLabel" type="Label" parent="YSortRoot/SlimeBasic" unique_id=1464495795]
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 23.0
+offset_bottom = -7.0
+text = "30/30"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="YSortRoot/Player/AttackCooldown" to="YSortRoot/Player" method="_on_attack_cooldown_timeout"]

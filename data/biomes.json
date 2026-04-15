@@ -1,0 +1,23 @@
+{
+	"plains": {
+		"id": "plains",
+		"name": "Verdant Plains",
+		"description": "Peaceful grasslands with gentle hills. A good place to start your journey.",
+		"enemy_spawns": [
+			{"enemy_id": "slime_basic", "weight": 1.0}
+		],
+		"ambient_color": "#E8F5E9",
+		"music_track": "res://assets/audio/music/plains_theme.ogg"
+	},
+	"volcanic": {
+		"id": "volcanic",
+		"name": "Volcanic Wastes",
+		"description": "Scorched lands filled with fire elementals and lava flows.",
+		"enemy_spawns": [
+			{"enemy_id": "fire_imp", "weight": 0.8},
+			{"enemy_id": "slime_basic", "weight": 0.2}
+		],
+		"ambient_color": "#FFEBEE",
+		"music_track": "res://assets/audio/music/volcanic_theme.ogg"
+	}
+}

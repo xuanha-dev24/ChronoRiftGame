@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dm1xq88g55tan"]
+
+[ext_resource type="Script" uid="uid://b3h8jo8dxbrfx" path="res://scripts/items/pickup_item.gd" id="1_ift3w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvkj8"]
+radius = 16.0
+
+[node name="PickupItem" type="Node2D" unique_id=722021829]
+y_sort_enabled = true
+script = ExtResource("1_ift3w")
+item_id = "chrono_dust"
+quantity = 3
+
+[node name="Area2D" type="Area2D" parent="." unique_id=604289300]
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=386812983]
+shape = SubResource("CircleShape2D_jvkj8")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=797795252]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="DespawnTimer" type="Timer" parent="." unique_id=1626581767]
+wait_time = 60.0
+one_shot = true
+
+[node name="InteractPrompt" type="Label" parent="." unique_id=1403449811]
+visible = false
+offset_top = -20.0
+offset_right = 55.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 12
+text = "Press E
+"
+horizontal_alignment = 1
+
+[node name="ItemLabel" type="Label" parent="." unique_id=1704358221]
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 3.0
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 12
+text = "Item Name"
+horizontal_alignment = 1

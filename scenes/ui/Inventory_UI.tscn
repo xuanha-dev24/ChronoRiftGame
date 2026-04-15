@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfb5b0b0f0hs6"]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory_ui.gd" id="1_inventory"]
+
+[node name="Inventory_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_inventory")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(420, 520)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(380, 440)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 6
+
+[node name="TooltipPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 100.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TooltipPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemName" type="Label" parent="TooltipPanel/VBoxContainer"]
+layout_mode = 2
+text = "Item Name"
+horizontal_alignment = 1
+
+[node name="ItemDescription" type="Label" parent="TooltipPanel/VBoxContainer"]
+layout_mode = 2
+text = "Description"
+autowrap_mode = 2

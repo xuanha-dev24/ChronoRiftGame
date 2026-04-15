@@ -1,0 +1,44 @@
+{
+	"earth": {
+		"name": "Earth",
+		"color_hex": "#8B6F47",
+		"weakness": "water",
+		"strength": "dark",
+		"description": "Solid and defensive element. Strong against Dark, weak to Water."
+	},
+	"water": {
+		"name": "Water",
+		"color_hex": "#3399FF",
+		"weakness": "fire",
+		"strength": "earth",
+		"description": "Fluid and adaptive element. Strong against Earth, weak to Fire."
+	},
+	"fire": {
+		"name": "Fire",
+		"color_hex": "#FF4500",
+		"weakness": "light",
+		"strength": "water",
+		"description": "Aggressive and destructive element. Strong against Water, weak to Light."
+	},
+	"light": {
+		"name": "Light",
+		"color_hex": "#FFFFCC",
+		"weakness": "dark",
+		"strength": "fire",
+		"description": "Pure and radiant element. Strong against Fire, weak to Dark."
+	},
+	"dark": {
+		"name": "Dark",
+		"color_hex": "#4B0082",
+		"weakness": "earth",
+		"strength": "light",
+		"description": "Mysterious and corrupting element. Strong against Light, weak to Earth."
+	},
+	"wind": {
+		"name": "Wind",
+		"color_hex": "#B3FFE6",
+		"weakness": "none",
+		"strength": "none",
+		"description": "Amplifier element. Increases damage of all other elements by 30%."
+	}
+}
