@@ -53,8 +53,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test progress bar value updates
     - _Requirements: 1.1, 1.4, 1.5, 1.6_
 
-- [ ] 4. Implement ManaBar component
-  - [ ] 4.1 Create ManaBar scene and script
+- [x] 4. Implement ManaBar component
+  - [x] 4.1 Create ManaBar scene and script
     - Create `scenes/ui/components/ManaBar.tscn` with Panel root
     - Add ProgressBar child node (200px wide, 30px tall)
     - Add Label child node for "X/Y" text display
@@ -71,8 +71,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test distinct color from HPBar
     - _Requirements: 2.1, 2.4, 2.5_
 
-- [ ] 5. Implement ChronoRiftIndicator component
-  - [ ] 5.1 Create ChronoRiftIndicator scene and script
+- [x] 5. Implement ChronoRiftIndicator component
+  - [x] 5.1 Create ChronoRiftIndicator scene and script
     - Create `scenes/ui/components/ChronoRiftIndicator.tscn` with Panel root
     - Add Label child node for cooldown/ready text
     - Add AnimationPlayer for pulse effect
@@ -91,8 +91,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test cooldown timer updates every 100ms
     - _Requirements: 3.2, 3.3, 3.4_
 
-- [ ] 6. Implement Hotbar component
-  - [ ] 6.1 Create Hotbar scene and script
+- [x] 6. Implement Hotbar component
+  - [x] 6.1 Create Hotbar scene and script
     - Create `scenes/ui/components/Hotbar.tscn` with HBoxContainer root
     - Add 5 Panel child nodes (Slot1 through Slot5)
     - Each slot: 50x50px with 10px spacing
@@ -113,8 +113,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test slot clearing when item depleted
     - _Requirements: 4.2, 4.3, 4.4, 4.6_
 
-- [ ] 7. Implement InventoryCounter component
-  - [ ] 7.1 Create InventoryCounter scene and script
+- [x] 7. Implement InventoryCounter component
+  - [x] 7.1 Create InventoryCounter scene and script
     - Create `scenes/ui/components/InventoryCounter.tscn` with Label root
     - Create `scripts/ui/inventory_counter.gd` script
     - Implement `update_count(current: int, max: int)` method
@@ -129,8 +129,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test display format "Inventory: X/Y"
     - _Requirements: 5.1, 5.3, 5.4_
 
-- [ ] 8. Implement ResourceDisplay component
-  - [ ] 8.1 Create ResourceDisplay scene and script
+- [x] 8. Implement ResourceDisplay component
+  - [x] 8.1 Create ResourceDisplay scene and script
     - Create `scenes/ui/components/ResourceDisplay.tscn` with VBoxContainer root
     - Add 5 HBoxContainer rows (FireShardRow, GoldRow, StoneRow, WoodRow, MeatRow)
     - Each row: ColorRect icon (color-coded) + Label for name and quantity
@@ -149,18 +149,18 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test zero quantity display
     - _Requirements: 6.1, 6.2, 6.5_
 
-- [ ] 9. Checkpoint - Verify all UI components render correctly
+- [x] 9. Checkpoint - Verify all UI components render correctly
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 10. Update HUD controller script
-  - [ ] 10.1 Create or update hud.gd controller
+- [x] 10. Update HUD controller script
+  - [x] 10.1 Create or update hud.gd controller
     - Create/update `scripts/ui/hud.gd` attached to HUD CanvasLayer
     - Cache references to all child components in `_ready()`
     - Add null checks for all component references
     - Implement error logging for missing components
     - _Requirements: 7.1, 7.2, 7.4_
   
-  - [ ] 10.2 Connect EventBus signals to HUD controller
+  - [x] 10.2 Connect EventBus signals to HUD controller
     - Connect `EventBus.player_damaged` to `_on_player_damaged(current, max)`
     - Connect `EventBus.player_mana_changed` to `_on_mana_changed(current, max)`
     - Connect `EventBus.chrono_rift_cooldown_started` to `_on_chrono_rift_cooldown(duration)`
@@ -171,7 +171,7 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Add error handling for signal connection failures
     - _Requirements: 8.1, 8.2, 8.4, 8.5, 8.6, 8.7_
   
-  - [ ] 10.3 Implement signal handler methods
+  - [x] 10.3 Implement signal handler methods
     - Implement `_on_player_damaged(current: int, max: int)` - calls HPBar.update_hp()
     - Implement `_on_mana_changed(current: int, max: int)` - calls ManaBar.update_mana()
     - Implement `_on_chrono_rift_cooldown(duration: float)` - calls ChronoRiftIndicator.start_cooldown()
@@ -182,16 +182,16 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Add null checks before calling component methods
     - _Requirements: 8.1, 8.2, 8.4, 8.5, 8.6, 8.7_
 
-- [ ] 11. Update player_stats to emit mana signals
-  - [ ] 11.1 Add mana signal emissions to player_stats
+- [x] 11. Update player_stats to emit mana signals
+  - [x] 11.1 Add mana signal emissions to player_stats
     - Open `scripts/player/player_stats.gd` or player controller script
     - Locate mana/stamina modification code
     - Add `EventBus.player_mana_changed.emit(current_mana, max_mana)` after mana changes
     - Ensure signal emits on ability usage, mana regeneration, and max mana changes
     - _Requirements: 8.5_
 
-- [ ] 12. Update chrono_rift_system to emit cooldown signals
-  - [ ] 12.1 Add cooldown signals to chrono_rift_system
+- [x] 12. Update chrono_rift_system to emit cooldown signals
+  - [x] 12.1 Add cooldown signals to chrono_rift_system
     - Open `scripts/systems/chrono_rift_system_poc.gd`
     - Locate ability activation code
     - Add `EventBus.chrono_rift_cooldown_started.emit(cooldown_duration)` when ability used
@@ -199,15 +199,15 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Add `EventBus.chrono_rift_ready.emit()` when cooldown completes
     - _Requirements: 8.7_
 
-- [ ] 13. Integrate HUD with existing game scene
-  - [ ] 13.1 Add HUD to main game scene
+- [x] 13. Integrate HUD with existing game scene
+  - [x] 13.1 Add HUD to main game scene
     - Open main game scene (e.g., `scenes/poc_world.tscn` or `Prototype_World.tscn`)
     - Instance HUD.tscn as child of root node
     - Verify HUD renders above all world elements
     - Test HUD visibility during gameplay
     - _Requirements: 7.1, 7.2, 7.4_
   
-  - [ ] 13.2 Initialize HUD with current player stats
+  - [x] 13.2 Initialize HUD with current player stats
     - In HUD `_ready()`, query current player stats
     - Call HPBar.update_hp() with initial values
     - Call ManaBar.update_mana() with initial values
@@ -215,8 +215,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Call ResourceDisplay.update_resource() for all resources
     - _Requirements: 1.1, 2.1, 5.1, 6.1_
 
-- [ ] 14. Implement window resize handling
-  - [ ] 14.1 Add responsive positioning to HUD
+- [x] 14. Implement window resize handling
+  - [x] 14.1 Add responsive positioning to HUD
     - In hud.gd, connect to `get_viewport().size_changed` signal
     - Implement `_on_viewport_size_changed()` method
     - Recalculate Hotbar position: (viewport_width/2 - 150, viewport_height - 70)
@@ -229,8 +229,8 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test all components remain visible after resize
     - _Requirements: 7.3_
 
-- [ ] 15. Apply visual styling and polish
-  - [ ] 15.1 Apply pixel art style to all components
+- [x] 15. Apply visual styling and polish
+  - [x] 15.1 Apply pixel art style to all components
     - Set texture filter to Nearest for all UI elements
     - Apply semi-transparent dark backgrounds: Color(0, 0, 0, 0.7)
     - Set font sizes: HP/Mana=16px, ChronoRift=14px, Hotbar=12px, Resources=14px
@@ -238,7 +238,7 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Ensure 10px minimum padding from screen edges
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 10.6_
   
-  - [ ] 15.2 Verify color palette consistency
+  - [x] 15.2 Verify color palette consistency
     - Verify HP colors: Green (#00FF00), Yellow (#FFFF00), Red (#FF0000)
     - Verify Mana color: Cyan (#00FFFF)
     - Verify Chrono Rift colors: Gray (#808080) cooldown, Cyan (#00FFFF) ready
@@ -246,7 +246,7 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Verify Resource colors: Fire=Red, Gold=Yellow, Stone=Gray, Wood=Brown, Meat=Pink
     - _Requirements: 9.5_
 
-- [ ] 16. Final checkpoint - End-to-end integration testing
+- [x] 16. Final checkpoint - End-to-end integration testing
   - [ ]* 16.1 Write integration tests for complete signal flow
     - Test Player_Stats → EventBus → HUD → HPBar flow
     - Test Player_Stats → EventBus → HUD → ManaBar flow
@@ -256,7 +256,7 @@ This implementation plan creates a comprehensive HUD system for displaying playe
     - Test Player_Inventory → EventBus → HUD → Hotbar flow
     - _Requirements: 8.1, 8.2, 8.4, 8.5, 8.6, 8.7_
   
-  - [ ] 16.2 Manual gameplay testing
+  - [x] 16.2 Manual gameplay testing
     - Test HP bar updates during combat (take damage, heal)
     - Test Mana bar updates during ability usage
     - Test Chrono Rift cooldown countdown and ready state

@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c8yv3qm5xwh2d" path="res://scenes/enemies/SlimeBasic.tscn" id="4_kew8u"]
 [ext_resource type="Script" uid="uid://cc76vsv33va11" path="res://scripts/enemies/slime_basic_poc.gd" id="4_my45k"]
 [ext_resource type="Script" uid="uid://brx1pk0s4ejsa" path="res://scripts/effects/effect_manager.gd" id="5_seqlo"]
-[ext_resource type="Script" uid="uid://ogtkk2cdcidk" path="res://scripts/ui/hud.gd" id="7_my45k"]
 [ext_resource type="PackedScene" uid="uid://fl1joqxfpncn" path="res://scenes/enemies/EarthGolem.tscn" id="8_04juh"]
+[ext_resource type="PackedScene" uid="uid://bvn3qm5xwh2e" path="res://scenes/ui/HUD.tscn" id="9_4ri10"]
 [ext_resource type="PackedScene" uid="uid://dfb5b0b0f0hs6" path="res://scenes/ui/Inventory_UI.tscn" id="9_yjpls"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orj3o"]
@@ -56,20 +56,11 @@ script = ExtResource("4_cfmtj")
 [node name="EffectManager" type="Node" parent="." unique_id=342642706]
 script = ExtResource("5_seqlo")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1364320460]
-script = ExtResource("7_my45k")
-
-[node name="HPLabel" type="Label" parent="HUD" unique_id=1556322125]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 87.0
-offset_bottom = 38.0
-theme_override_font_sizes/font_size = 20
-text = "100/100"
-
 [node name="EarthGolem" parent="." unique_id=971151775 instance=ExtResource("8_04juh")]
 position = Vector2(-60, -77)
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1715252660]
 
 [node name="Inventory_UI" parent="UILayer" unique_id=1749514861 instance=ExtResource("9_yjpls")]
+
+[node name="HUD" parent="." unique_id=761020540 instance=ExtResource("9_4ri10")]

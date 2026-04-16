@@ -7,10 +7,12 @@ const SLOW_RADIUS: float = 80.0
 const SLOW_FACTOR: float = 0.2   # enemy speed * 0.2
 const SLOW_DURATION: float = 3.0
 const RIFT_COOLDOWN: float = 5.0
+const MANA_COST: int = 50  # Mana cost to use Chrono Rift
 
 var is_on_cooldown: bool = false
 var slowed_enemies: Array[CharacterBody2D] = []
 var player: CharacterBody2D = null
+var player_stats: Node = null  # Reference to PlayerStats
 
 @onready var cooldown_timer: Timer = $CooldownTimer
 @onready var slow_area: Area2D = $SlowArea
@@ -20,6 +22,10 @@ func _ready() -> void:
 	cooldown_timer.timeout.connect(_on_cooldown_timer_timeout)
 	# Get player reference
 	player = get_parent() as CharacterBody2D
+	
+	# Get PlayerStats reference
+	if player and player.has_node("PlayerStats"):
+		player_stats = player.get_node("PlayerStats")
 
 func _process(_delta: float) -> void:
 	# Update SlowArea position to follow player
@@ -32,11 +38,19 @@ func _input(event: InputEvent) -> void:
 		activate_slow()
 
 func activate_slow() -> void:
+	# Check mana cost
+	if player_stats and not player_stats.use_mana(MANA_COST):
+		print("CHRONO RIFT — Not enough mana! Need %d mana" % MANA_COST)
+		return
+	
 	is_on_cooldown = true
 	cooldown_timer.start(RIFT_COOLDOWN)
 	
+	# Emit cooldown started signal
+	EventBus.chrono_rift_cooldown_started.emit(RIFT_COOLDOWN)
+	
 	# Debug: Check if SlowArea is working
-	print("CHRONO RIFT — SLOW activated")
+	print("CHRONO RIFT — SLOW activated (-%d mana)" % MANA_COST)
 	print("SlowArea monitoring: ", slow_area.monitoring)
 	print("SlowArea position: ", slow_area.global_position)
 	
@@ -71,3 +85,6 @@ func _remove_slow() -> void:
 func _on_cooldown_timer_timeout() -> void:
 	is_on_cooldown = false
 	print("Chrono Rift ready")
+	
+	# Emit ready signal
+	EventBus.chrono_rift_ready.emit()

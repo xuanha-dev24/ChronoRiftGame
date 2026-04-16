@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cqh8tnp4b7tbl" path="res://scripts/systems/chrono_rift_system_poc.gd" id="2_gmlin"]
 [ext_resource type="Script" uid="uid://d22byhmgxx6o4" path="res://scripts/player/player_animation_controller.gd" id="3_gmlin"]
 [ext_resource type="Script" uid="uid://cdla5fmi8jiko" path="res://scripts/player/player_state_machine.gd" id="4_lvxji"]
+[ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="5_stats"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp6q6"]
 radius = 8.0
@@ -66,5 +67,8 @@ script = ExtResource("3_gmlin")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1337202101]
 script = ExtResource("4_lvxji")
+
+[node name="PlayerStats" type="Node" parent="."]
+script = ExtResource("5_stats")
 
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

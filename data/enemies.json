@@ -10,9 +10,10 @@
 		"element": "water",
 		"xp_reward": 15,
 		"loot_table": [
-			{"item_id": "chrono_dust", "chance": 1.0, "quantity": [5, 10]},
-			{"item_id": "health_potion", "chance": 0.8, "quantity": [2, 4]},
-			{"item_id": "mana_potion", "chance": 0.6, "quantity": [1, 3]}
+			{"item_id": "chrono_dust", "chance": 1.0, "quantity": [10, 20]},
+			{"item_id": "health_potion", "chance": 1.0, "quantity": [3, 6]},
+			{"item_id": "mana_potion", "chance": 1.0, "quantity": [2, 5]},
+			{"item_id": "iron_ore", "chance": 0.5, "quantity": [1, 3]}
 		]
 	},
 	"fire_imp": {
@@ -41,10 +42,10 @@
 		"element": "earth",
 		"xp_reward": 50,
 		"loot_table": [
-			{"item_id": "iron_ore", "chance": 1.0, "quantity": [3, 6]},
-			{"item_id": "chrono_dust", "chance": 1.0, "quantity": [8, 15]},
-			{"item_id": "health_potion", "chance": 0.9, "quantity": [3, 5]},
-			{"item_id": "mana_potion", "chance": 0.7, "quantity": [2, 4]}
+			{"item_id": "iron_ore", "chance": 1.0, "quantity": [5, 10]},
+			{"item_id": "chrono_dust", "chance": 1.0, "quantity": [15, 25]},
+			{"item_id": "health_potion", "chance": 1.0, "quantity": [5, 8]},
+			{"item_id": "mana_potion", "chance": 1.0, "quantity": [3, 6]}
 		]
 	}
 }

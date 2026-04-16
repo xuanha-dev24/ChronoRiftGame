@@ -20,10 +20,17 @@ ChronoRiftGame/
 │   ├── docs/                       # Project documentation
 │   │   ├── enemy-ai/               # Enemy AI system documentation
 │   │   ├── loot-progression/       # Loot và progression system docs
+│   │   ├── guide/                  # Implementation guides
+│   │   │   └── hud-player-stats/   # HUD system implementation guides (4 docs) ✅
 │   │   └── prototype/              # Prototype phase documentation
 │   └── specs/                      # Feature specifications
 │       ├── enemy-ai-system/        # Enemy AI implementation specs
-│       └── loot-and-progression/   # Loot system implementation specs
+│       ├── loot-and-progression/   # Loot system implementation specs
+│       └── hud-player-stats/       # HUD & Player Stats Display specs ✅
+│           ├── requirements.md     # 10 requirements với acceptance criteria
+│           ├── design.md           # Architecture, components, data flow
+│           ├── tasks.md            # 16 tasks (42 sub-tasks, 29 required + 13 optional)
+│           └── .config.kiro        # Spec configuration
 │
 ├── assets/                         # Game assets (sprites, audio, tilesets)
 │   ├── audio/                      # Sound effects và music
@@ -44,6 +51,10 @@ ChronoRiftGame/
 │   ├── LootSystem.gd               # Loot drop system (spawns items on enemy death)
 │   └── Player_Inventory.gd         # Player inventory management (20 slots, stacking)
 │
+├── scripts/
+│   ├── autoloads/                  # Additional autoload scripts
+│   │   └── resource_manager.gd     # Resource tracking (fire_shard, gold, stone, wood, meat) ✅
+│
 ├── data/                           # JSON data files cho game configuration
 │   ├── biomes.json                 # Biome definitions và properties
 │   ├── elements.json               # Element system data
@@ -63,7 +74,9 @@ ChronoRiftGame/
 │   │   └── player.tscn             # Main player scene
 │   ├── systems/                    # Game system scenes
 │   ├── ui/                         # User interface scenes
-│   │   ├── HUD.tscn                # Heads-up display
+│   │   ├── components/             # UI component scenes
+│   │   │   └── HPBar.tscn          # Health bar component (ProgressBar + Label) ✅
+│   │   ├── HUD.tscn                # Heads-up display (StatsPanel, Hotbar, InfoPanel) ✅
 │   │   └── Inventory_UI.tscn       # Inventory UI (6-column grid, centered, CanvasLayer)
 │   └── world/                      # World và level scenes
 │       ├── poc_world.tscn          # Proof of concept world
@@ -100,7 +113,8 @@ ChronoRiftGame/
 │   │   ├── save_system.gd          # Save/load functionality
 │   │   └── time_echo_system.gd     # Time echo replay system
 │   ├── ui/                         # UI control scripts
-│   │   ├── hud.gd                  # HUD display logic
+│   │   ├── hud.gd                  # HUD display logic (HP, inventory counter) ✅
+│   │   ├── hp_bar.gd               # HPBar component logic (color-coded health) ✅
 │   │   └── inventory_ui.gd         # Inventory UI controller (grid, tooltips, I/Tab toggle)
 │   └── world/                      # World generation và management
 │       ├── biome_manager.gd        # Biome system management
@@ -243,6 +257,39 @@ Chứa documentation và specs cho development:
 - Item usage system (future spec)
 - Rarity system (future spec)
 
+### 🔄 HUD & Player Stats Display System (IN PROGRESS)
+**Status:** Phase 1 Complete (3/16 tasks, 19%)  
+**Spec:** `.kiro/specs/hud-player-stats/`
+
+**Phase 1 Completed (Tasks 1-3):**
+- ✅ **EventBus signals**: Added 5 new signals (player_mana_changed, chrono_rift_cooldown_started, chrono_rift_ready, resource_changed, hotbar_slot_changed)
+- ✅ **ResourceManager** (autoload): Tracks 5 resources (fire_shard, gold, stone, wood, meat), emits signals on changes
+- ✅ **HUD scene structure**: StatsPanel (top-left), Hotbar (bottom-center), InfoPanel (top-right)
+- ✅ **HPBar component**: Color-coded health bar (green/yellow/red), "X/Y" display, semi-transparent background
+- ✅ **Inventory counter**: Integrated into HUD, color-coded (white/orange/red), connected to Player_Inventory
+
+**Remaining (Tasks 4-16):**
+- ⏸️ ManaBar component (Task 4)
+- ⏸️ ChronoRiftIndicator component (Task 5)
+- ⏸️ Hotbar component (Task 6)
+- ⏸️ InventoryCounter component (Task 7) - partially done
+- ⏸️ ResourceDisplay component (Task 8)
+- ⏸️ HUD controller integration (Tasks 10-13)
+- ⏸️ Window resize handling (Task 14)
+- ⏸️ Visual styling & polish (Task 15)
+- ⏸️ End-to-end testing (Task 16)
+
+**Files Created:**
+- `scripts/autoloads/resource_manager.gd` (autoload)
+- `scenes/ui/components/HPBar.tscn`
+- `scripts/ui/hp_bar.gd`
+- `.kiro/docs/guide/hud-player-stats/` (4 documentation files)
+
+**Next Steps:**
+- Implement ManaBar component (Task 4)
+- Implement ChronoRiftIndicator component (Task 5)
+- Continue with remaining UI components
+
 ---
 
 ## Game Systems Overview
@@ -295,7 +342,8 @@ Chứa documentation và specs cho development:
 
 ### Autoload Pattern
 - Global singletons accessible từ anywhere: `/root/AutoloadName`
-- Examples: `/root/LootSystem`, `/root/Player_Inventory`, `/root/EffectManager`
+- Examples: `/root/LootSystem`, `/root/Player_Inventory`, `/root/EffectManager`, `/root/ResourceManager`
+- **ResourceManager**: Tracks 5 resources (fire_shard, gold, stone, wood, meat), emits EventBus signals ✅
 
 ### State Machine Pattern
 - Enemy AI: 5 states (Idle, Patrol, Chase, Attack, Dead)
@@ -320,13 +368,15 @@ Chứa documentation và specs cho development:
 - Development Approach: Planning → POC → Prototype → MVP
 - Testing: Manual testing in Godot editor, user tests each phase
 
-### Current Status (2026-04-15)
+### Current Status (2026-04-16)
 - ✅ Enemy AI System: 74% complete (MUST priorities done)
 - ✅ Loot & Progression System: 100% complete (MVP)
-- 🔄 Next: Phase 8 (Chrono Rift Expansion) or Phase 10 (Base Building)
+- 🔄 **HUD & Player Stats Display**: Phase 1 complete (19%), Tasks 4-16 remaining
+- 🔜 Next: Complete HUD system (Tasks 4-16), then Phase 8 (Chrono Rift Expansion)
 
 ### Known Issues
 - Enemies occasionally clip into player during chase
 - No sound effects yet (audio files not created)
-- Inventory capacity warning not implemented
 - Manual pickup mode implemented but not tested
+- HUD system incomplete (only HPBar + inventory counter done)
+- ManaBar, ChronoRiftIndicator, Hotbar, ResourceDisplay chưa implement

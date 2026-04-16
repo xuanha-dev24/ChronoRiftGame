@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://e1txya6p8asj"]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory_counter.gd" id="1_invcounter"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_inventory"]
+font_size = 16
+
+[node name="InventoryCounter" type="Label"]
+offset_right = 150.0
+offset_bottom = 23.0
+text = "Inventory: 0/30"
+label_settings = SubResource("LabelSettings_inventory")
+script = ExtResource("1_invcounter")

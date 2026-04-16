@@ -17,6 +17,7 @@ var is_dead: bool = false
 @onready var attack_timer: Timer = $AttackCooldown
 @onready var anim_controller: Node = $AnimationController
 @onready var sprite: ColorRect = $Sprite
+@onready var player_stats: Node = $PlayerStats  # Reference to PlayerStats
 
 var can_attack: bool = true
 var is_attacking: bool = false
@@ -27,6 +28,12 @@ func _ready() -> void:
 	
 	# Add to player group for enemy detection
 	add_to_group("player")
+	
+	# Initialize PlayerStats if exists
+	if player_stats:
+		print("[Player] PlayerStats found - Mana system active")
+	else:
+		push_warning("[Player] PlayerStats not found - Mana system inactive")
 	
 	print("[Player] Initialized | HP: %d/%d" % [current_hp, max_hp])
 
@@ -105,6 +112,7 @@ func take_damage(amount: int) -> void:
 		return  # Can't take damage during i-frames or when dead
 	
 	current_hp -= amount
+	current_hp = max(0, current_hp)  # Clamp to 0 minimum
 	
 	print("[Player] Took %d damage | HP: %d/%d" % [amount, current_hp, max_hp])
 	
@@ -117,9 +125,10 @@ func take_damage(amount: int) -> void:
 	# Check for death
 	if current_hp <= 0:
 		_die()
-	else:
-		# Start invincibility frames
-		_start_iframes()
+		return  # Stop processing after death
+	
+	# Start invincibility frames (only if not dead)
+	_start_iframes()
 
 func _flash_damage() -> void:
 	"""Flash sprite red when taking damage."""
@@ -172,16 +181,18 @@ func _die() -> void:
 	is_dead = true
 	current_hp = 0
 	
-	print("[Player] DIED")
+	print("[Player] DIED - HP: 0/%d" % max_hp)
 	
-	# Emit death signal
+	# Emit death signal with HP = 0
 	EventBus.player_died.emit(global_position)
+	EventBus.player_damaged.emit(0, max_hp)  # Update HUD to show 0 HP
 	
 	# Stop movement
 	velocity = Vector2.ZERO
 	
-	# Disable input (could add a flag to check in _input)
+	# Disable physics and input
 	set_physics_process(false)
+	set_process_input(false)
 	
 	# Fade out
 	if sprite:
@@ -191,6 +202,7 @@ func _die() -> void:
 	# Wait for fade
 	await get_tree().create_timer(1.0).timeout
 	
-	# Simple death message (will be replaced with proper death screen later)
+	# Death message
 	print("=== GAME OVER ===")
-	print("Press R to restart (not implemented yet)")
+	print("Player is dead. Restart scene to play again.")
+	print("Press F5 to restart")

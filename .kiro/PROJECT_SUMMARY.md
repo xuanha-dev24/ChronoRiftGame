@@ -173,6 +173,82 @@
 
 ---
 
+### 🔄 Phase 10: HUD & Player Stats Display System
+**Goal:** Comprehensive HUD với HP, Mana, Resources, Hotbar, Chrono Rift indicator  
+**Status:** Phase 1 Complete (3/16 tasks, 19%)  
+**Spec:** `.kiro/specs/hud-player-stats/`
+
+**Phase 1 Completed (Tasks 1-3):**
+- ✅ **Task 1.1**: Added 5 new EventBus signals:
+  - `player_mana_changed(current: int, max: int)`
+  - `chrono_rift_cooldown_started(duration: float)`
+  - `chrono_rift_ready()`
+  - `resource_changed(resource_type: String, amount: int)`
+  - `hotbar_slot_changed(slot_index: int, item_data: Dictionary)`
+- ✅ **Task 1.2**: Created ResourceManager autoload:
+  - Tracks 5 resources: fire_shard, gold, stone, wood, meat
+  - Methods: get_resource(), add_resource(), set_resource(), spend_resource()
+  - Emits EventBus.resource_changed signal
+  - Registered in project.godot
+- ✅ **Task 2.1**: Updated HUD scene structure:
+  - StatsPanel (VBoxContainer) - top-left (10, 10)
+  - Hotbar (HBoxContainer) - bottom-center
+  - InfoPanel (VBoxContainer) - top-right
+  - Responsive positioning with anchors
+- ✅ **Task 3.1**: Created HPBar component:
+  - Scene: HPBar.tscn with PanelContainer + ProgressBar + Label
+  - Script: hp_bar.gd with update_hp() method
+  - Color-coded: Green (>60%), Yellow (30-60%), Red (<30%)
+  - Semi-transparent dark background
+- ✅ **Inventory Counter**: Integrated into hud.gd:
+  - Connected to Player_Inventory.inventory_updated signal
+  - Color-coded: White (<90%), Orange (≥90%), Red (100%)
+  - Display format: "Inventory: X/30"
+
+**Remaining Tasks (4-16):**
+- ⏸️ **Task 4**: ManaBar component (cyan color, "X/Y" display)
+- ⏸️ **Task 5**: ChronoRiftIndicator component (cooldown timer, "READY" state, pulse animation)
+- ⏸️ **Task 6**: Hotbar component (5 slots, 50x50px, key bindings 1-5)
+- ⏸️ **Task 7**: InventoryCounter component (separate component, currently in hud.gd)
+- ⏸️ **Task 8**: ResourceDisplay component (5 resources với color-coded icons)
+- ⏸️ **Task 9**: Checkpoint - Verify all UI components render correctly
+- ⏸️ **Task 10**: Update HUD controller script (cache references, connect signals)
+- ⏸️ **Task 11**: Update player_stats to emit mana signals
+- ⏸️ **Task 12**: Update chrono_rift_system to emit cooldown signals
+- ⏸️ **Task 13**: Integrate HUD with existing game scene
+- ⏸️ **Task 14**: Implement window resize handling
+- ⏸️ **Task 15**: Apply visual styling and polish
+- ⏸️ **Task 16**: Final checkpoint - End-to-end integration testing
+
+**Files Created:**
+- `scripts/autoloads/resource_manager.gd` (autoload)
+- `scenes/ui/components/HPBar.tscn`
+- `scripts/ui/hp_bar.gd`
+- `scripts/ui/hud.gd` (updated with inventory counter + HPBar integration)
+- `scenes/ui/HUD.tscn` (updated structure)
+- `.kiro/docs/guide/hud-player-stats/` (4 documentation files):
+  - README.md
+  - TASK_01_EVENTBUS_RESOURCEMANAGER.md
+  - TASK_02_HUD_SCENE_STRUCTURE.md
+  - TASK_03_HPBAR_COMPONENT.md
+
+**Testing:**
+- ✅ Phase 1 tests passed:
+  - ResourceManager autoload working
+  - HPBar color changes (green → yellow → red)
+  - EventBus signals working
+  - Inventory counter updates correctly
+  - Loot drops increased (100% drop rates for testing)
+  - Player death bug fixed (HP clamped to 0, physics disabled)
+
+**Next Steps:**
+- Implement ManaBar component (Task 4)
+- Implement ChronoRiftIndicator component (Task 5)
+- Continue with remaining UI components (Tasks 6-8)
+- Integration and testing (Tasks 9-16)
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -359,6 +435,7 @@ ChronoRiftGame/
 4. **LootSystem** - Loot drop system ✅
 5. **EffectManager** - Effect spawning và management ✅
 6. **Player_Inventory** - Player inventory (20 slots) ✅
+7. **ResourceManager** - Resource tracking (fire_shard, gold, stone, wood, meat) ✅
 
 ### Collision Layers
 - **Layer 1:** Player
@@ -382,7 +459,7 @@ ChronoRiftGame/
 - ✅ 2 enemy types (SlimeBasic, EarthGolem)
 - ⏸️ Deferred: FireImp (ranged enemy), Polish & Debug
 
-### Phase 8: Chrono Rift Expansion (Next Priority)
+### Phase 8: Chrono Rift Expansion (Future Priority)
 - **REWIND mode:** Quay ngược 3 giây
 - **ACCELERATE mode:** Tăng tốc player
 - Polish visual effects
@@ -394,13 +471,25 @@ ChronoRiftGame/
 - ✅ Inventory UI (20 slots, stacking, tooltips)
 - ⏸️ Deferred: Item usage, Rarity system
 
-### Phase 10: Base Building (Future)
+### 🔄 Phase 10: HUD & Player Stats Display (IN PROGRESS - 19% Complete)
+- ✅ EventBus signals (5 new signals)
+- ✅ ResourceManager autoload (5 resources)
+- ✅ HUD scene structure (StatsPanel, Hotbar, InfoPanel)
+- ✅ HPBar component (color-coded health bar)
+- ✅ Inventory counter (integrated into HUD)
+- ⏸️ ManaBar component (Task 4)
+- ⏸️ ChronoRiftIndicator component (Task 5)
+- ⏸️ Hotbar component (Task 6)
+- ⏸️ ResourceDisplay component (Task 8)
+- ⏸️ Integration & testing (Tasks 9-16)
+
+### Phase 11: Base Building (Future)
 - Build structures (walls, turrets, crafting stations)
 - Resource management
 - Defend base from waves
 
-### Phase 11: MVP Preparation
-- HUD với HP bar, stamina, chrono rift count
+### Phase 12: MVP Preparation
+- Complete HUD với all stats
 - Death screen + respawn
 - Victory condition (survive 5 waves)
 - Save/Load system
@@ -443,14 +532,18 @@ ChronoRiftGame/
 
 - Chưa có proper sprites (dùng ColorRect)
 - Chưa có sound effects
-- Chưa có proper UI (HUD placeholder)
 - Enemy AI: FireImp (ranged) chưa implement
 - Chỉ có SLOW mode cho Chrono Rift (REWIND, ACCELERATE chưa có)
 - Item usage system chưa có (potions không dùng được)
 - Rarity system chưa implement
-- Inventory capacity warning chưa có
-- Manual pickup mode implemented nhưng chưa test kỹ
 - Enemies occasionally clip into player during chase
+- **HUD system incomplete:**
+  - ✅ HPBar working
+  - ✅ Inventory counter working
+  - ⏸️ ManaBar chưa có
+  - ⏸️ ChronoRiftIndicator chưa có
+  - ⏸️ Hotbar chưa có
+  - ⏸️ ResourceDisplay chưa có
 
 ---
 
@@ -522,6 +615,14 @@ Tất cả docs nằm trong `.kiro/docs/`:
   - INVENTORY_UI_SETUP.md
   - CENTER_INVENTORY_GUIDE.md
 
+**HUD & Player Stats Documentation:**
+- `.kiro/specs/hud-player-stats/` - Full spec với requirements, design, tasks
+- `.kiro/docs/guide/hud-player-stats/` - 4 implementation guides:
+  - README.md (overview, quick start, progress tracking)
+  - TASK_01_EVENTBUS_RESOURCEMANAGER.md
+  - TASK_02_HUD_SCENE_STRUCTURE.md
+  - TASK_03_HPBAR_COMPONENT.md
+
 ---
 
 ## 🤝 Collaboration Notes
@@ -542,6 +643,7 @@ Tất cả docs nằm trong `.kiro/docs/`:
 
 ---
 
-**Last Updated:** Phase 9 (Loot & Progression) - Complete ✅  
-**Next Phase:** Phase 8 (Chrono Rift Expansion) or Phase 10 (Base Building)  
-**Status:** Prototype đang phát triển tốt! Enemy AI + Loot system hoạt động! 🚀
+**Last Updated:** Phase 10 (HUD & Player Stats Display) - Phase 1 Complete (19%) ✅  
+**Current Phase:** Phase 10 - Tasks 4-16 remaining  
+**Next Phase:** Complete Phase 10, then Phase 8 (Chrono Rift Expansion)  
+**Status:** Prototype đang phát triển tốt! Enemy AI + Loot system + HUD Phase 1 hoạt động! 🚀
