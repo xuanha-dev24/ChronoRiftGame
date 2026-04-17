@@ -1,0 +1,53 @@
+{
+  "wall": {
+    "name": "Wall",
+    "max_health": 100,
+    "costs": {
+      "wood": 10
+    },
+    "grid_size": {
+      "x": 1,
+      "y": 1
+    },
+    "scene_path": "res://scenes/structures/Wall.tscn"
+  },
+  "turret": {
+    "name": "Turret",
+    "max_health": 150,
+    "costs": {
+      "wood": 15,
+      "stone": 10
+    },
+    "grid_size": {
+      "x": 1,
+      "y": 1
+    },
+    "scene_path": "res://scenes/structures/Turret.tscn",
+    "can_rotate": true
+  },
+  "crafting_station": {
+    "name": "Crafting Station",
+    "max_health": 200,
+    "costs": {
+      "wood": 20,
+      "stone": 15
+    },
+    "grid_size": {
+      "x": 2,
+      "y": 2
+    },
+    "scene_path": "res://scenes/structures/CraftingStation.tscn"
+  },
+  "storage_chest": {
+    "name": "Storage Chest",
+    "max_health": 150,
+    "costs": {
+      "wood": 25
+    },
+    "grid_size": {
+      "x": 2,
+      "y": 2
+    },
+    "scene_path": "res://scenes/structures/StorageChest.tscn"
+  }
+}

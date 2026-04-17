@@ -28,8 +28,9 @@ func _on_damage_dealt(target: Node, amount: int) -> void:
 		hit_effect.global_position = target.global_position
 		get_tree().current_scene.add_child(hit_effect)
 
-func _on_chrono_rift_used(type: String) -> void:
+func _on_chrono_rift_used(_type: String) -> void:
 	# Screen shake for chrono rift
+	# Prefix unused parameter with underscore to suppress warning
 	if camera and camera.has_method("shake"):
 		camera.shake(8.0)
 

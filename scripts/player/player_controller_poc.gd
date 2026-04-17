@@ -11,6 +11,12 @@ const SPEED = 120.0
 var can_attack: bool = true
 
 func _physics_process(_delta: float) -> void:
+	# Disable movement in build mode
+	if Building_System.build_mode_active:
+		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
+		move_and_slide()
+		return
+	
 	var input_dir = Vector2(
 		Input.get_axis("move_left", "move_right"),
 		Input.get_axis("move_up", "move_down")
@@ -28,6 +34,10 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
+	# Disable attacks in build mode
+	if Building_System.build_mode_active:
+		return
+	
 	if event.is_action_pressed("attack") and can_attack:
 		_do_attack()
 

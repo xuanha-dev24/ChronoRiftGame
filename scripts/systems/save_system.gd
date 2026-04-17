@@ -8,6 +8,7 @@ func save_game() -> void:
 	var save_data = {
 		"player": get_player_data(),
 		"world": get_world_data(),
+		"structures": save_structures(),
 		"timestamp": Time.get_unix_time_from_system()
 	}
 	
@@ -56,4 +57,67 @@ func get_world_data() -> Dictionary:
 
 func apply_save_data(data: Dictionary) -> void:
 	# TODO: Apply loaded data to game
-	pass
+	
+	# Load structures if present
+	if data.has("structures"):
+		load_structures(data["structures"])
+
+## Save all structures in the scene
+func save_structures() -> Array:
+	var structure_data = []
+	var structures = get_tree().get_nodes_in_group("structures")
+	
+	for structure in structures:
+		if structure.has_method("get_save_data"):
+			structure_data.append(structure.get_save_data())
+	
+	print("[Save_System] Saved %d structures" % structure_data.size())
+	return structure_data
+
+## Load structures from save data
+func load_structures(structure_data: Array) -> void:
+	if structure_data.is_empty():
+		print("[Save_System] No structures to load")
+		return
+	
+	var loaded_count = 0
+	var failed_count = 0
+	
+	for data in structure_data:
+		# Validate structure data
+		if not _validate_structure_data(data):
+			push_warning("[Save_System] Invalid structure data, skipping")
+			failed_count += 1
+			continue
+		
+		# Load structure through Building_System
+		if Building_System.load_structure_from_data(data):
+			loaded_count += 1
+		else:
+			failed_count += 1
+	
+	print("[Save_System] Loaded %d structures (%d failed)" % [loaded_count, failed_count])
+
+## Validate structure save data
+func _validate_structure_data(data: Dictionary) -> bool:
+	# Check required fields
+	if not data.has("type"):
+		return false
+	if not data.has("grid_position"):
+		return false
+	if not data.has("current_health"):
+		return false
+	
+	# Validate grid position
+	var grid_pos_data = data["grid_position"]
+	if not grid_pos_data.has("x") or not grid_pos_data.has("y"):
+		return false
+	
+	var grid_pos = Vector2i(grid_pos_data["x"], grid_pos_data["y"])
+	
+	# Check bounds [0, 29]
+	if grid_pos.x < 0 or grid_pos.x >= 30 or grid_pos.y < 0 or grid_pos.y >= 30:
+		push_warning("[Save_System] Structure position out of bounds: %s" % grid_pos)
+		return false
+	
+	return true

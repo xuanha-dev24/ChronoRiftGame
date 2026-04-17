@@ -86,5 +86,6 @@ func start_cooldown() -> void:
 	is_on_cooldown = true
 	current_cooldown = cooldown_duration
 
-func _on_chrono_rift_used(type: String) -> void:
-	print("Chrono Rift used: ", type)
+func _on_chrono_rift_used(_type: String) -> void:
+	# Prefix unused parameter with underscore to suppress warning
+	pass  # Event handler for chrono rift usage

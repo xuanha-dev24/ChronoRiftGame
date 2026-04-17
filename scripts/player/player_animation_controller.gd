@@ -13,20 +13,36 @@ func _ready() -> void:
 	_setup_animations()
 
 func _setup_animations() -> void:
+	# Check if animation_player exists (may be null in test environment)
+	if animation_player == null:
+		push_warning("[PlayerAnimationController] AnimationPlayer not found, skipping animation setup")
+		return
+	
 	# Create animations programmatically
 	var anim_lib = AnimationLibrary.new()
+	if anim_lib == null:
+		push_error("[PlayerAnimationController] Failed to create AnimationLibrary")
+		return
 	
 	# Idle animation
-	anim_lib.add_animation("idle", _create_idle_animation())
+	var idle_anim = _create_idle_animation()
+	if idle_anim:
+		anim_lib.add_animation("idle", idle_anim)
 	
 	# Walk animation
-	anim_lib.add_animation("walk", _create_walk_animation())
+	var walk_anim = _create_walk_animation()
+	if walk_anim:
+		anim_lib.add_animation("walk", walk_anim)
 	
 	# Attack animation
-	anim_lib.add_animation("attack", _create_attack_animation())
+	var attack_anim = _create_attack_animation()
+	if attack_anim:
+		anim_lib.add_animation("attack", attack_anim)
 	
-	animation_player.add_animation_library("", anim_lib)
-	animation_player.play("idle")
+	# Only add library if it has animations
+	if anim_lib.get_animation_list().size() > 0:
+		animation_player.add_animation_library("", anim_lib)
+		animation_player.play("idle")
 
 func _create_idle_animation() -> Animation:
 	var anim = Animation.new()
@@ -84,6 +100,10 @@ func _create_attack_animation() -> Animation:
 	return anim
 
 func update_animation(velocity: Vector2, attacking: bool) -> void:
+	# Check if animation_player exists
+	if animation_player == null:
+		return
+	
 	is_moving = velocity.length() > 0
 	is_attacking = attacking
 	
@@ -99,6 +119,10 @@ func update_animation(velocity: Vector2, attacking: bool) -> void:
 			animation_player.play("idle")
 
 func _update_direction(velocity: Vector2) -> void:
+	# Check if sprite exists
+	if sprite == null:
+		return
+	
 	# Update sprite flip based on movement direction
 	if velocity.x < 0:
 		sprite.scale.x = -1

@@ -1,0 +1,188 @@
+[gd_scene load_steps=2 format=3 uid="uid://g3vzc8r0ctul"]
+
+[ext_resource type="Script" path="res://scripts/ui/build_ui.gd" id="1_build_ui"]
+
+[node name="Build_UI" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_build_ui")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -320.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "BUILD MODE"
+horizontal_alignment = 1
+
+[node name="ResourceDisplay" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="WoodRow" type="HBoxContainer" parent="Panel/VBoxContainer/ResourceDisplay"]
+layout_mode = 2
+
+[node name="Icon" type="ColorRect" parent="Panel/VBoxContainer/ResourceDisplay/WoodRow"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/ResourceDisplay/WoodRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Wood: 0"
+vertical_alignment = 1
+
+[node name="StoneRow" type="HBoxContainer" parent="Panel/VBoxContainer/ResourceDisplay"]
+layout_mode = 2
+
+[node name="Icon" type="ColorRect" parent="Panel/VBoxContainer/ResourceDisplay/StoneRow"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/ResourceDisplay/StoneRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Stone: 0"
+vertical_alignment = 1
+
+[node name="Separator1" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="StructureButtons" type="GridContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 2
+
+[node name="WallButton" type="Button" parent="Panel/VBoxContainer/StructureButtons"]
+custom_minimum_size = Vector2(105, 60)
+layout_mode = 2
+text = "Wall
+10 Wood"
+
+[node name="WallIcon" type="ColorRect" parent="Panel/VBoxContainer/StructureButtons/WallButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -18.0
+offset_right = 8.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="TurretButton" type="Button" parent="Panel/VBoxContainer/StructureButtons"]
+custom_minimum_size = Vector2(105, 60)
+layout_mode = 2
+text = "Turret
+15W 10S"
+
+[node name="TurretIcon" type="ColorRect" parent="Panel/VBoxContainer/StructureButtons/TurretButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -18.0
+offset_right = 8.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="CraftingStationButton" type="Button" parent="Panel/VBoxContainer/StructureButtons"]
+custom_minimum_size = Vector2(105, 60)
+layout_mode = 2
+text = "Crafting
+20W 15S"
+
+[node name="CraftingStationIcon" type="ColorRect" parent="Panel/VBoxContainer/StructureButtons/CraftingStationButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -18.0
+offset_right = 12.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.6, 0.2, 1)
+
+[node name="StorageChestButton" type="Button" parent="Panel/VBoxContainer/StructureButtons"]
+custom_minimum_size = Vector2(105, 60)
+layout_mode = 2
+text = "Storage
+25 Wood"
+
+[node name="StorageChestIcon" type="ColorRect" parent="Panel/VBoxContainer/StructureButtons/StorageChestButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -18.0
+offset_right = 12.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.2, 0.4, 0.8, 1)
+
+[node name="Separator2" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InfoLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Press B to exit build mode"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ErrorMessage" type="Label" parent="Panel/VBoxContainer"]
+modulate = Color(1, 0.3, 0.3, 1)
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/StructureButtons/WallButton" to="." method="_on_wall_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/StructureButtons/TurretButton" to="." method="_on_turret_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/StructureButtons/CraftingStationButton" to="." method="_on_crafting_station_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/StructureButtons/StorageChestButton" to="." method="_on_storage_chest_button_pressed"]

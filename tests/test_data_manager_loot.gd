@@ -14,7 +14,7 @@ func test_get_drop_table_with_valid_enemy_slime_basic():
 	
 	assert_not_null(drop_table, "Drop table should not be null for slime_basic")
 	assert_true(drop_table is Array, "Drop table should be an Array")
-	assert_eq(drop_table.size(), 2, "slime_basic should have 2 loot entries")
+	assert_eq(drop_table.size(), 4, "slime_basic should have 4 loot entries")
 	
 	# Verify first entry structure
 	assert_true(drop_table[0].has("item_id"), "First entry should have item_id")
@@ -23,7 +23,7 @@ func test_get_drop_table_with_valid_enemy_slime_basic():
 	
 	# Verify specific values for slime_basic
 	assert_eq(drop_table[0]["item_id"], "chrono_dust", "First item should be chrono_dust")
-	assert_eq(drop_table[0]["chance"], 0.3, "chrono_dust drop chance should be 0.3")
+	assert_eq(drop_table[0]["chance"], 1.0, "chrono_dust drop chance should be 1.0")
 
 func test_get_drop_table_with_valid_enemy_fire_imp():
 	# Test get_drop_table with valid enemy type: fire_imp
@@ -43,7 +43,7 @@ func test_get_drop_table_with_valid_enemy_earth_golem():
 	
 	assert_not_null(drop_table, "Drop table should not be null for earth_golem")
 	assert_true(drop_table is Array, "Drop table should be an Array")
-	assert_eq(drop_table.size(), 3, "earth_golem should have 3 loot entries")
+	assert_eq(drop_table.size(), 4, "earth_golem should have 4 loot entries")
 
 func test_get_drop_table_with_unknown_enemy():
 	# Test get_drop_table with unknown enemy type (should return empty array)

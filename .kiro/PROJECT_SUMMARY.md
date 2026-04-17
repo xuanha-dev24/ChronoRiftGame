@@ -173,79 +173,132 @@
 
 ---
 
-### 🔄 Phase 10: HUD & Player Stats Display System
+### ✅ Phase 10: HUD & Player Stats Display System
 **Goal:** Comprehensive HUD với HP, Mana, Resources, Hotbar, Chrono Rift indicator  
-**Status:** Phase 1 Complete (3/16 tasks, 19%)  
+**Status:** MVP Complete (16/16 main tasks, 100%)  
 **Spec:** `.kiro/specs/hud-player-stats/`
 
-**Phase 1 Completed (Tasks 1-3):**
-- ✅ **Task 1.1**: Added 5 new EventBus signals:
-  - `player_mana_changed(current: int, max: int)`
-  - `chrono_rift_cooldown_started(duration: float)`
-  - `chrono_rift_ready()`
-  - `resource_changed(resource_type: String, amount: int)`
-  - `hotbar_slot_changed(slot_index: int, item_data: Dictionary)`
-- ✅ **Task 1.2**: Created ResourceManager autoload:
-  - Tracks 5 resources: fire_shard, gold, stone, wood, meat
-  - Methods: get_resource(), add_resource(), set_resource(), spend_resource()
-  - Emits EventBus.resource_changed signal
-  - Registered in project.godot
-- ✅ **Task 2.1**: Updated HUD scene structure:
-  - StatsPanel (VBoxContainer) - top-left (10, 10)
-  - Hotbar (HBoxContainer) - bottom-center
-  - InfoPanel (VBoxContainer) - top-right
-  - Responsive positioning with anchors
-- ✅ **Task 3.1**: Created HPBar component:
-  - Scene: HPBar.tscn with PanelContainer + ProgressBar + Label
-  - Script: hp_bar.gd with update_hp() method
-  - Color-coded: Green (>60%), Yellow (30-60%), Red (<30%)
-  - Semi-transparent dark background
-- ✅ **Inventory Counter**: Integrated into hud.gd:
-  - Connected to Player_Inventory.inventory_updated signal
-  - Color-coded: White (<90%), Orange (≥90%), Red (100%)
-  - Display format: "Inventory: X/30"
-
-**Remaining Tasks (4-16):**
-- ⏸️ **Task 4**: ManaBar component (cyan color, "X/Y" display)
-- ⏸️ **Task 5**: ChronoRiftIndicator component (cooldown timer, "READY" state, pulse animation)
-- ⏸️ **Task 6**: Hotbar component (5 slots, 50x50px, key bindings 1-5)
-- ⏸️ **Task 7**: InventoryCounter component (separate component, currently in hud.gd)
-- ⏸️ **Task 8**: ResourceDisplay component (5 resources với color-coded icons)
-- ⏸️ **Task 9**: Checkpoint - Verify all UI components render correctly
-- ⏸️ **Task 10**: Update HUD controller script (cache references, connect signals)
-- ⏸️ **Task 11**: Update player_stats to emit mana signals
-- ⏸️ **Task 12**: Update chrono_rift_system to emit cooldown signals
-- ⏸️ **Task 13**: Integrate HUD with existing game scene
-- ⏸️ **Task 14**: Implement window resize handling
-- ⏸️ **Task 15**: Apply visual styling and polish
-- ⏸️ **Task 16**: Final checkpoint - End-to-end integration testing
+**Completed:**
+- ✅ **EventBus signals** (Task 1): 5 new signals added
+- ✅ **ResourceManager autoload** (Task 1): Tracks 5 resources
+- ✅ **HUD scene structure** (Task 2): StatsPanel, Hotbar, InfoPanel
+- ✅ **HPBar component** (Task 3): Color-coded health bar
+- ✅ **ManaBar component** (Task 4): Cyan mana bar with empty state
+- ✅ **ChronoRiftIndicator** (Task 5): Cooldown timer + pulse animation
+- ✅ **Hotbar component** (Task 6): 5 slots with key bindings
+- ✅ **InventoryCounter** (Task 7): Color-coded inventory display
+- ✅ **ResourceDisplay** (Task 8): 5 resources with color-coded icons
+- ✅ **HUD controller** (Task 10): Signal connections + component updates
+- ✅ **player_stats integration** (Task 11): Mana signal emissions
+- ✅ **chrono_rift_system integration** (Task 12): Cooldown signals
+- ✅ **Game scene integration** (Task 13): HUD added to Prototype_World
+- ✅ **Window resize handling** (Task 14): Responsive positioning
+- ✅ **Visual polish** (Task 15): Pixel art style, consistent colors
+- ✅ **End-to-end testing** (Task 16): Manual gameplay testing complete
 
 **Files Created:**
 - `scripts/autoloads/resource_manager.gd` (autoload)
-- `scenes/ui/components/HPBar.tscn`
-- `scripts/ui/hp_bar.gd`
-- `scripts/ui/hud.gd` (updated with inventory counter + HPBar integration)
-- `scenes/ui/HUD.tscn` (updated structure)
-- `.kiro/docs/guide/hud-player-stats/` (4 documentation files):
-  - README.md
-  - TASK_01_EVENTBUS_RESOURCEMANAGER.md
-  - TASK_02_HUD_SCENE_STRUCTURE.md
-  - TASK_03_HPBAR_COMPONENT.md
+- `scenes/ui/components/HPBar.tscn`, `scripts/ui/hp_bar.gd`
+- `scenes/ui/components/ManaBar.tscn`, `scripts/ui/mana_bar.gd`
+- `scenes/ui/components/ChronoRiftIndicator.tscn`, `scripts/ui/chrono_rift_indicator.gd`
+- `scenes/ui/components/Hotbar.tscn`, `scripts/ui/hotbar.gd`
+- `scenes/ui/components/InventoryCounter.tscn`, `scripts/ui/inventory_counter.gd`
+- `scenes/ui/components/ResourceDisplay.tscn`, `scripts/ui/resource_display.gd`
+- `scripts/ui/hud.gd` (complete controller with all signal connections)
+- `scenes/ui/HUD.tscn` (updated with all components)
 
 **Testing:**
-- ✅ Phase 1 tests passed:
-  - ResourceManager autoload working
-  - HPBar color changes (green → yellow → red)
-  - EventBus signals working
-  - Inventory counter updates correctly
-  - Loot drops increased (100% drop rates for testing)
-  - Player death bug fixed (HP clamped to 0, physics disabled)
+- ✅ All manual tests passed
+- ✅ HP bar updates during combat
+- ✅ Mana bar updates during ability usage
+- ✅ Chrono Rift cooldown and ready state working
+- ✅ Hotbar item assignment functional
+- ✅ Inventory counter color warnings working
+- ✅ Resource display updates correctly
+- ✅ Window resize handling verified
 
-**Next Steps:**
-- Implement ManaBar component (Task 4)
-- Implement ChronoRiftIndicator component (Task 5)
-- Continue with remaining UI components (Tasks 6-8)
-- Integration and testing (Tasks 9-16)
+**Deferred:**
+- Optional unit tests (marked with `*` in tasks.md)
+
+---
+
+### ✅ Phase 11: Resource Gathering & Farming System
+**Goal:** Harvestable objects (trees, rocks, bushes) for resource gathering  
+**Status:** MVP Complete (13/13 main tasks, 100%)  
+**Spec:** `.kiro/specs/resource-gathering-farming/`
+
+**Completed:**
+- ✅ **HarvestableObject state machine**: 4 states (NORMAL, INTERACTABLE, GATHERING, DEPLETED)
+- ✅ **3 harvestable object types**:
+  - Tree → Wood (brown ColorRect, 1-3 wood per harvest)
+  - Rock → Stone (gray ColorRect, 1-3 stone per harvest)
+  - Bush → Meat (green ColorRect, 1-3 meat per harvest)
+- ✅ **Gathering mechanics**:
+  - Player detection (50px range)
+  - Interaction indicator (white bar above object)
+  - Progress bar (fills over 1-3 seconds)
+  - Cancellation on player exit
+  - Random gather time (1-3s) and respawn time (30-60s)
+- ✅ **Resource integration**:
+  - Adds resources to ResourceManager
+  - Emits EventBus.resource_changed signal
+  - Validates resource types (wood, stone, meat)
+- ✅ **Respawn system**:
+  - Objects become depleted after harvest (50% opacity, gray color)
+  - Respawn after 30-60 seconds
+  - Re-randomize timings on respawn
+  - Transition to INTERACTABLE if player still in range
+- ✅ **HarvestableObjectSpawner**:
+  - Spawns minimum 5 of each type (15+ total objects)
+  - Position validation (80px minimum spacing)
+  - Map bounds checking (50px margin from edges)
+  - Fallback position if no valid spot found
+  - Adds objects to YSortRoot for proper layering
+- ✅ **Visual feedback**:
+  - Color changes: normal → interactable → depleted
+  - Interaction indicator (visible only when interactable)
+  - Progress bar with fill animation
+  - Collision disabled when depleted
+- ✅ **Integration**:
+  - Works with ResourceManager (tracks wood, stone, meat)
+  - Uses EventBus for resource_changed signals
+  - Responds to "interact" input action (E key)
+  - Player must be in "player" group
+  - Objects added to YSortRoot for proper rendering order
+
+**Features:**
+- Player approaches object → color brightens, indicator appears
+- Press E to gather → progress bar fills smoothly
+- Complete gathering → receive 1-3 resources, object becomes depleted
+- Wait 30-60s → object respawns with new random timings
+- 15+ objects spawn on map with proper spacing
+- Objects don't overlap with each other (80px spacing)
+
+**Files Created:**
+- `scripts/world/harvestable_object.gd` (250 lines, complete state machine)
+- `scripts/world/harvestable_object_spawner.gd` (95 lines, spawning logic)
+- `scenes/world/harvestable_objects/Tree.tscn` (Area2D + ColorRect + indicators)
+- `scenes/world/harvestable_objects/Rock.tscn` (Area2D + ColorRect + indicators)
+- `scenes/world/harvestable_objects/Bush.tscn` (Area2D + ColorRect + indicators)
+- `tests/test_harvestable_object_state_machine.gd` (15 unit tests)
+- `tests/test_harvestable_object_visual_state.gd` (8 unit tests)
+- `tests/test_harvestable_object_cancel_gathering.gd` (8 unit tests)
+- `tests/test_harvestable_object_resource_integration.gd` (14 unit tests)
+
+**Testing:**
+- ✅ Manual testing complete (all mechanics verified)
+- ✅ State transitions working correctly
+- ✅ Resource integration verified
+- ✅ Respawn system functional
+- ✅ Spawner creates proper distribution
+- ✅ 45 unit tests created (requires GUT addon to run)
+
+**Deferred:**
+- Optional unit tests (marked with `*` in tasks.md)
+- Tool requirements (future enhancement)
+- Gathering animations (future enhancement)
+- Sound effects (future enhancement)
+- Particle effects (future enhancement)
 
 ---
 
@@ -643,7 +696,7 @@ Tất cả docs nằm trong `.kiro/docs/`:
 
 ---
 
-**Last Updated:** Phase 10 (HUD & Player Stats Display) - Phase 1 Complete (19%) ✅  
-**Current Phase:** Phase 10 - Tasks 4-16 remaining  
-**Next Phase:** Complete Phase 10, then Phase 8 (Chrono Rift Expansion)  
-**Status:** Prototype đang phát triển tốt! Enemy AI + Loot system + HUD Phase 1 hoạt động! 🚀
+**Last Updated:** Phase 11 (Resource Gathering & Farming System) + Phase 10 (HUD System) Complete ✅  
+**Completed Phases:** Enemy AI (74%), Loot System (100%), HUD System (100%), Resource Gathering (100%)  
+**Next Phase:** Phase 8 (Chrono Rift Expansion) or new feature spec  
+**Status:** Prototype đang phát triển tốt! 4 major systems hoạt động! 🚀

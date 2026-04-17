@@ -39,3 +39,12 @@ signal day_night_cycle_changed(time_of_day: float)
 # UI signals
 signal ui_opened(ui_name: String)
 signal ui_closed(ui_name: String)
+
+# Building System signals
+signal build_mode_changed(active: bool)
+signal structure_placed(type: String, position: Vector2)
+signal structure_destroyed(type: String, position: Vector2)
+signal structure_demolished(type: String, position: Vector2)
+signal crafting_station_opened()
+signal storage_chest_opened(chest: Node2D)
+signal storage_chest_closed()

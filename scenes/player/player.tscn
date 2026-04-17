@@ -16,7 +16,7 @@ radius = 40.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_0cegv"]
 radius = 80.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1161030008]
+[node name="Player" type="CharacterBody2D" groups=["player"] unique_id=1161030008]
 script = ExtResource("1_dovo2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1627334907]

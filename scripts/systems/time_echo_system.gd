@@ -2,7 +2,8 @@
 # Manages Time Echo mechanic (player death creates echo with items)
 extends Node
 
-const TIME_ECHO_SCENE = preload("res://scenes/systems/TimeEcho.tscn")
+# TODO: Create TimeEcho.tscn scene
+# const TIME_ECHO_SCENE = preload("res://scenes/systems/TimeEcho.tscn")
 
 var active_echoes: Array[Node2D] = []
 

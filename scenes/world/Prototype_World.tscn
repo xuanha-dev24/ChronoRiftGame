@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://c8yv3qm5xwh2d" path="res://scenes/enemies/SlimeBasic.tscn" id="4_kew8u"]
 [ext_resource type="Script" uid="uid://cc76vsv33va11" path="res://scripts/enemies/slime_basic_poc.gd" id="4_my45k"]
 [ext_resource type="Script" uid="uid://brx1pk0s4ejsa" path="res://scripts/effects/effect_manager.gd" id="5_seqlo"]
+[ext_resource type="Script" path="res://scripts/world/harvestable_object_spawner.gd" id="6_spawner"]
+[ext_resource type="PackedScene" uid="uid://c8j9k2m3n4o5p6q7" path="res://scenes/world/harvestable_objects/Tree.tscn" id="7_tree"]
+[ext_resource type="PackedScene" uid="uid://d9k0l3n4o5p6q7r8" path="res://scenes/world/harvestable_objects/Rock.tscn" id="8_rock"]
+[ext_resource type="PackedScene" uid="uid://b1u2s3h4b5u6s7h8" path="res://scenes/world/harvestable_objects/Bush.tscn" id="9_bush"]
 [ext_resource type="PackedScene" uid="uid://fl1joqxfpncn" path="res://scenes/enemies/EarthGolem.tscn" id="8_04juh"]
 [ext_resource type="PackedScene" uid="uid://bvn3qm5xwh2e" path="res://scenes/ui/HUD.tscn" id="9_4ri10"]
 [ext_resource type="PackedScene" uid="uid://dfb5b0b0f0hs6" path="res://scenes/ui/Inventory_UI.tscn" id="9_yjpls"]
+[ext_resource type="PackedScene" uid="uid://g3vzc8r0ctul" path="res://scenes/ui/Build_UI.tscn" id="10_build_ui"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orj3o"]
 radius = 12.0
@@ -17,6 +22,12 @@ radius = 12.0
 script = ExtResource("1_gnmdo")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1727061081]
+
+[node name="HarvestableObjectSpawner" type="Node" parent="."]
+script = ExtResource("6_spawner")
+tree_scene = ExtResource("7_tree")
+rock_scene = ExtResource("8_rock")
+bush_scene = ExtResource("9_bush")
 
 [node name="YSortRoot" type="Node2D" parent="." unique_id=1728085584]
 y_sort_enabled = true
@@ -64,3 +75,5 @@ position = Vector2(-60, -77)
 [node name="Inventory_UI" parent="UILayer" unique_id=1749514861 instance=ExtResource("9_yjpls")]
 
 [node name="HUD" parent="." unique_id=761020540 instance=ExtResource("9_4ri10")]
+
+[node name="Build_UI" parent="." unique_id=761020541 instance=ExtResource("10_build_ui")]

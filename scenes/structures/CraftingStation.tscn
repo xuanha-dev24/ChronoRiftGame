@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3xqv7n3yw9zl"]
+
+[ext_resource type="Script" path="res://scripts/structures/crafting_station.gd" id="1_crafting"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crafting"]
+size = Vector2(32, 32)
+
+[node name="CraftingStation" type="Area2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_crafting")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(1, 0.647059, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_crafting")
+
+[node name="HealthBar" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 16.0
+offset_bottom = -18.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Fill" type="ColorRect" parent="HealthBar"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 2.0
+color = Color(0, 1, 0, 1)
+
+[node name="InteractionIndicator" type="ColorRect" parent="."]
+visible = false
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = -22.0
+color = Color(1, 1, 1, 1)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
