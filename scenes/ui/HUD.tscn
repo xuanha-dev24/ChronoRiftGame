@@ -54,3 +54,11 @@ layout_mode = 2
 
 [node name="ResourceDisplay" parent="InfoPanel" instance=ExtResource("7_resource")]
 layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="InfoPanel"]
+layout_mode = 2
+text = "Time: --:--"
+
+[node name="FPSLabel" type="Label" parent="InfoPanel"]
+layout_mode = 2
+text = "FPS: --"

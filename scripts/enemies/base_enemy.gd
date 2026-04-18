@@ -138,6 +138,7 @@ func _die() -> void:
 	
 	# Emit loot signal
 	EventBus.enemy_killed.emit(enemy_type, global_position)
+	EventBus.generated_enemy_killed.emit(self, enemy_type, global_position)
 	
 	# Print loot drop (placeholder until pickup system exists)
 	print("%s died — dropped %d chrono dust" % [enemy_type, chrono_dust_drop])

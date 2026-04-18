@@ -6,6 +6,7 @@ var items_data: Dictionary = {}
 var enemies_data: Dictionary = {}
 var elements_data: Dictionary = {}
 var biomes_data: Dictionary = {}
+var crafting_recipes_data: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -15,6 +16,7 @@ func load_all_data() -> void:
 	enemies_data = load_json_file("res://data/enemies.json")
 	elements_data = load_json_file("res://data/elements.json")
 	biomes_data = load_json_file("res://data/biomes.json")
+	crafting_recipes_data = load_json_file("res://data/crafting_recipes.json")
 	print("All game data loaded successfully")
 
 func load_json_file(file_path: String) -> Dictionary:
@@ -69,3 +71,6 @@ func get_drop_table(enemy_id: String) -> Array:
 		if enemy_data.has("loot_table"):
 			return enemy_data["loot_table"]
 	return []
+
+func get_crafting_recipes() -> Dictionary:
+	return crafting_recipes_data.duplicate(true)

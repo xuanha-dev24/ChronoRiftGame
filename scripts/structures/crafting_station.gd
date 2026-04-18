@@ -47,6 +47,6 @@ func _on_body_exited(body: Node2D) -> void:
 			interaction_indicator.visible = false
 
 func open_crafting_ui() -> void:
-	"""Open the crafting UI (placeholder for now)"""
+	"""Open the crafting UI"""
 	EventBus.crafting_station_opened.emit()
-	print("[CraftingStation] Crafting UI - Coming Soon")
+	print("[CraftingStation] Crafting UI opened")

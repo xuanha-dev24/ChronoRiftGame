@@ -1,21 +1,151 @@
 {
+	"ocean": {
+		"id": "ocean",
+		"name": "Tidal Flats",
+		"description": "Shallow blue water scattered with slick rocks and open space.",
+		"priority": 100,
+		"height_max": 0.22,
+		"tiles": ["water"],
+		"tile_weights": [
+			{"tile": "water", "weight": 1.0}
+		],
+		"object_spawn_chance": 0.03,
+		"enemy_spawn_chance": 0.0,
+		"objects": ["water_rock"],
+		"object_weights": [
+			{"object": "water_rock", "weight": 1.0}
+		],
+		"enemy_spawns": [],
+		"ambient_color": "#CFEFFF",
+		"music_track": "res://assets/audio/music/plains_theme.ogg"
+	},
+	"beach": {
+		"id": "beach",
+		"name": "Sunlit Beach",
+		"description": "Warm sand bands that connect the plains with the sea.",
+		"priority": 90,
+		"height_min": 0.22,
+		"height_max": 0.30,
+		"tiles": ["sand", "water"],
+		"tile_weights": [
+			{"tile": "sand", "weight": 0.8},
+			{"tile": "water", "weight": 0.2}
+		],
+		"object_spawn_chance": 0.02,
+		"enemy_spawn_chance": 0.0,
+		"objects": ["water_rock", "bush", "decor_bush"],
+		"object_weights": [
+			{"object": "water_rock", "weight": 0.68},
+			{"object": "bush", "weight": 0.17},
+			{"object": "decor_bush", "weight": 0.15}
+		],
+		"enemy_spawns": [],
+		"ambient_color": "#FFF3D1",
+		"music_track": "res://assets/audio/music/plains_theme.ogg"
+	},
 	"plains": {
 		"id": "plains",
 		"name": "Verdant Plains",
 		"description": "Peaceful grasslands with gentle hills. A good place to start your journey.",
+		"priority": 50,
+		"height_min": 0.30,
+		"height_max": 0.58,
+		"moisture_max": 0.58,
+		"tiles": ["grass"],
+		"tile_weights": [
+			{"tile": "grass", "weight": 1.0}
+		],
+		"object_spawn_chance": 0.035,
+		"enemy_spawn_chance": 0.02,
+		"objects": ["tree", "bush", "decor_bush", "decor_rock", "gold_stone"],
+		"object_weights": [
+			{"object": "tree", "weight": 0.46},
+			{"object": "bush", "weight": 0.18},
+			{"object": "decor_bush", "weight": 0.14},
+			{"object": "decor_rock", "weight": 0.14},
+			{"object": "gold_stone", "weight": 0.08}
+		],
 		"enemy_spawns": [
 			{"enemy_id": "slime_basic", "weight": 1.0}
 		],
 		"ambient_color": "#E8F5E9",
 		"music_track": "res://assets/audio/music/plains_theme.ogg"
 	},
+	"forest": {
+		"id": "forest",
+		"name": "Deep Forest",
+		"description": "Dense woodland with thicker canopy and richer resources.",
+		"priority": 60,
+		"height_min": 0.35,
+		"height_max": 0.68,
+		"moisture_min": 0.48,
+		"tiles": ["grass"],
+		"tile_weights": [
+			{"tile": "grass", "weight": 1.0}
+		],
+		"object_spawn_chance": 0.10,
+		"enemy_spawn_chance": 0.04,
+		"objects": ["tree", "bush", "decor_bush", "decor_rock", "gold_stone"],
+		"object_weights": [
+			{"object": "tree", "weight": 0.56},
+			{"object": "bush", "weight": 0.14},
+			{"object": "decor_bush", "weight": 0.10},
+			{"object": "decor_rock", "weight": 0.08},
+			{"object": "gold_stone", "weight": 0.12}
+		],
+		"enemy_spawns": [
+			{"enemy_id": "slime_basic", "weight": 1.0}
+		],
+		"ambient_color": "#DDEFD7",
+		"music_track": "res://assets/audio/music/plains_theme.ogg"
+	},
+	"mountain": {
+		"id": "mountain",
+		"name": "Stone Ridge",
+		"description": "High rocky land where ore veins and boulders break the grass.",
+		"priority": 80,
+		"height_min": 0.70,
+		"tiles": ["rock", "grass"],
+		"tile_weights": [
+			{"tile": "rock", "weight": 0.82},
+			{"tile": "grass", "weight": 0.18}
+		],
+		"object_spawn_chance": 0.05,
+		"enemy_spawn_chance": 0.03,
+		"objects": ["boulder", "gold_stone", "decor_rock"],
+		"object_weights": [
+			{"object": "boulder", "weight": 0.42},
+			{"object": "gold_stone", "weight": 0.40},
+			{"object": "decor_rock", "weight": 0.18}
+		],
+		"enemy_spawns": [
+			{"enemy_id": "earth_golem", "weight": 1.0}
+		],
+		"ambient_color": "#E4E7EB",
+		"music_track": "res://assets/audio/music/plains_theme.ogg"
+	},
 	"volcanic": {
 		"id": "volcanic",
 		"name": "Volcanic Wastes",
 		"description": "Scorched lands filled with fire elementals and lava flows.",
+		"priority": 70,
+		"height_min": 0.58,
+		"moisture_max": 0.38,
+		"tiles": ["rock", "sand"],
+		"tile_weights": [
+			{"tile": "rock", "weight": 0.68},
+			{"tile": "sand", "weight": 0.32}
+		],
+		"object_spawn_chance": 0.03,
+		"enemy_spawn_chance": 0.028,
+		"objects": ["boulder", "gold_stone"],
+		"object_weights": [
+			{"object": "boulder", "weight": 0.45},
+			{"object": "gold_stone", "weight": 0.55}
+		],
 		"enemy_spawns": [
-			{"enemy_id": "fire_imp", "weight": 0.8},
-			{"enemy_id": "slime_basic", "weight": 0.2}
+			{"enemy_id": "earth_golem", "weight": 0.55},
+			{"enemy_id": "slime_basic", "weight": 0.45}
 		],
 		"ambient_color": "#FFEBEE",
 		"music_track": "res://assets/audio/music/volcanic_theme.ogg"

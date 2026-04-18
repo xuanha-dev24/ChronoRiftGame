@@ -56,5 +56,19 @@
 			"amount": 50
 		},
 		"rarity": "common"
+	},
+	"mana_potion": {
+		"id": "mana_potion",
+		"name": "Mana Potion",
+		"type": "consumable",
+		"description": "Restores 35 mana instantly.",
+		"icon_path": "res://assets/sprites/ui/item_mana_potion.png",
+		"icon_color": "#3366FF",
+		"stack_size": 10,
+		"effect": {
+			"type": "restore_mana",
+			"amount": 35
+		},
+		"rarity": "common"
 	}
 }

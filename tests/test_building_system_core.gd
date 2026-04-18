@@ -93,6 +93,18 @@ func test_grid_to_world_at_origin():
 	
 	assert_eq(world_pos, Vector2(8.0, 8.0), "Grid origin should map to world center (8, 8)")
 
+func test_get_placement_world_position_single_cell():
+	var grid_pos = Vector2i(5, 10)
+	var world_pos = Building_System.get_placement_world_position(grid_pos, Vector2i(1, 1))
+
+	assert_eq(world_pos, Vector2(88.0, 168.0), "1x1 placement center should match the cell center")
+
+func test_get_placement_world_position_multi_cell():
+	var grid_pos = Vector2i(5, 10)
+	var world_pos = Building_System.get_placement_world_position(grid_pos, Vector2i(2, 2))
+
+	assert_eq(world_pos, Vector2(96.0, 176.0), "2x2 placement center should be centered on the whole footprint")
+
 # ===== Task 1.7: Placement Validation - Bounds Checking =====
 
 func test_is_within_bounds_valid_1x1():

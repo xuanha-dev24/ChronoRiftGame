@@ -18,6 +18,7 @@ signal chrono_dust_collected(amount: int)
 
 # Combat signals
 signal enemy_killed(enemy_type: String, position: Vector2)
+signal generated_enemy_killed(enemy: Node, enemy_type: String, position: Vector2)
 signal damage_dealt(target: Node, amount: int)
 
 # Item/Inventory signals

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cj8bkfj4k26jb"]
+
+[ext_resource type="Script" uid="uid://rvqktjo4n7pu" path="res://scripts/world/chunk_sample.gd" id="1"]
+
+[node name="ChunkSample" type="Node2D" unique_id=437810738]
+script = ExtResource("1")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1491510862]

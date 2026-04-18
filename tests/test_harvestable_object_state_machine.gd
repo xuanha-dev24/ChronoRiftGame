@@ -72,6 +72,15 @@ func test_respawn_time_randomized_on_ready():
 	assert_between(harvestable_object.respawn_time, 30.0, 60.0,
 		"Respawn time should be between 30.0 and 60.0 seconds")
 
+func test_interaction_range_applied_to_collision_shape():
+	# Interaction area should match configured interaction range
+	harvestable_object.interaction_range = 50.0
+	harvestable_object._ready()
+
+	var shape := harvestable_object.collision_shape.shape as CircleShape2D
+	assert_not_null(shape, "Collision shape should be a circle after _ready")
+	assert_eq(shape.radius, 50.0, "Interaction circle radius should match interaction_range")
+
 # ===== Task 2: State Transitions =====
 
 func test_normal_to_interactable_on_player_enter():

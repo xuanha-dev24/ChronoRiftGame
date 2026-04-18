@@ -107,6 +107,35 @@ func test_remove_item_from_empty_slot_returns_empty_dict():
 	
 	assert_eq(removed_item, {}, "Should return empty dictionary")
 
+func test_move_item_to_slot_moves_stack_to_empty_slot():
+	storage_chest.add_item("chrono_dust", 5)
+
+	var moved = storage_chest.move_item_to_slot(0, 4)
+
+	assert_true(moved, "Should move stack to empty slot")
+	assert_null(storage_chest.chest_inventory[0], "Source slot should be empty after move")
+	assert_eq(storage_chest.chest_inventory[4]["item_id"], "chrono_dust", "Target slot should receive moved stack")
+
+func test_move_item_to_slot_swaps_different_items():
+	storage_chest.add_item("chrono_dust", 5)
+	storage_chest.set_item(3, {"item_id": "health_potion", "quantity": 2})
+
+	var moved = storage_chest.move_item_to_slot(0, 3)
+
+	assert_true(moved, "Should swap different occupied chest slots")
+	assert_eq(storage_chest.chest_inventory[0]["item_id"], "health_potion", "Source slot should now hold previous target item")
+	assert_eq(storage_chest.chest_inventory[3]["item_id"], "chrono_dust", "Target slot should now hold dragged item")
+
+func test_move_item_to_slot_merges_matching_items():
+	storage_chest.set_item(0, {"item_id": "chrono_dust", "quantity": 5})
+	storage_chest.set_item(1, {"item_id": "chrono_dust", "quantity": 7})
+
+	var moved = storage_chest.move_item_to_slot(0, 1)
+
+	assert_true(moved, "Should merge matching chest stacks")
+	assert_null(storage_chest.chest_inventory[0], "Source slot should be cleared after merge")
+	assert_eq(storage_chest.chest_inventory[1]["quantity"], 12, "Target slot should contain merged quantity")
+
 func test_get_item_returns_item_data():
 	# get_item should return item data without removing
 	storage_chest.add_item("chrono_dust", 5)
@@ -116,6 +145,14 @@ func test_get_item_returns_item_data():
 	assert_eq(item_data["item_id"], "chrono_dust", "Should return correct item ID")
 	assert_eq(item_data["quantity"], 5, "Should return correct quantity")
 	assert_not_null(storage_chest.chest_inventory[0], "Item should still be in slot")
+
+func test_get_item_returns_copy_not_internal_reference():
+	storage_chest.add_item("chrono_dust", 5)
+
+	var item_data = storage_chest.get_item(0)
+	item_data["quantity"] = 999
+
+	assert_eq(storage_chest.chest_inventory[0]["quantity"], 5, "External mutation should not change internal chest state")
 
 func test_is_inventory_full_returns_false_when_empty():
 	# is_inventory_full should return false when slots available
@@ -154,6 +191,18 @@ func test_chest_ui_signal_emitted_on_interact():
 	storage_chest.open_chest_ui()
 	
 	assert_signal_emitted(EventBus, "storage_chest_opened", "Should emit storage_chest_opened signal")
+
+func test_chest_close_signal_emitted_when_player_exits():
+	watch_signals(EventBus)
+
+	var player = Node2D.new()
+	player.add_to_group("player")
+	add_child_autofree(player)
+
+	storage_chest._on_body_entered(player)
+	storage_chest._on_body_exited(player)
+
+	assert_signal_emitted(EventBus, "storage_chest_closed", "Should emit storage_chest_closed signal")
 
 # ===== Task 7.5: Chest Item Dropping on Destruction =====
 

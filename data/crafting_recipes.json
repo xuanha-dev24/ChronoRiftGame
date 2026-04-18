@@ -1,0 +1,60 @@
+{
+	"health_potion": {
+		"name": "Health Potion",
+		"description": "Distill chrono dust into a quick healing tonic.",
+		"output": {
+			"item_id": "health_potion",
+			"quantity": 1
+		},
+		"ingredients": [
+			{
+				"item_id": "chrono_dust",
+				"quantity": 12
+			},
+			{
+				"item_id": "iron_ore",
+				"quantity": 1
+			}
+		]
+	},
+	"mana_potion": {
+		"name": "Mana Potion",
+		"description": "A volatile blend that restores spell energy.",
+		"output": {
+			"item_id": "mana_potion",
+			"quantity": 1
+		},
+		"ingredients": [
+			{
+				"item_id": "chrono_dust",
+				"quantity": 8
+			},
+			{
+				"item_id": "fire_crystal",
+				"quantity": 1
+			}
+		]
+	},
+	"chrono_rift_small": {
+		"name": "Small Chrono Rift",
+		"description": "Compress shards of time into a spare chrono charge.",
+		"output": {
+			"item_id": "chrono_rift_small",
+			"quantity": 1
+		},
+		"ingredients": [
+			{
+				"item_id": "chrono_dust",
+				"quantity": 20
+			},
+			{
+				"item_id": "fire_crystal",
+				"quantity": 1
+			},
+			{
+				"item_id": "iron_ore",
+				"quantity": 2
+			}
+		]
+	}
+}

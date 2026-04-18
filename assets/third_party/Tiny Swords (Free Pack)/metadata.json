@@ -1,0 +1,13 @@
+{
+  "name": "Tiny Swords (Free Pack)",
+  "source": "Pasted into repository by user. Please confirm original author/source URL.",
+  "original_source_url": "",
+  "author": "Unknown (verify)",
+  "license": "Please confirm; if Kenney asset, typically CC0/public domain",
+  "tile_size": 32,
+  "recommended_tilesheets": [
+    "res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Tileset/Tilemap_color1.png",
+    "res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Tileset/Tilemap_color2.png"
+  ],
+  "notes": "Confirm tile_size and license. Remove macOS extras before committing. If tile_size differs, update this file and mapping."
+}

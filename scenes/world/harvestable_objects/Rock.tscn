@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://d9k0l3n4o5p6q7r8"]
+[gd_scene load_steps=4 format=3 uid="uid://d9k0l3n4o5p6q7r8"]
 
 [ext_resource type="Script" path="res://scripts/world/harvestable_object.gd" id="1_rock"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock2.png" id="2_rock_texture"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rock"]
 radius = 18.0
@@ -8,32 +9,29 @@ radius = 18.0
 [node name="Rock" type="Area2D"]
 script = ExtResource("1_rock")
 resource_type = "stone"
-normal_color = Color(0.6, 0.6, 0.65, 1)
-interactable_color = Color(0.8, 0.8, 0.85, 1)
-depleted_color = Color(0.3, 0.3, 0.35, 1)
+normal_color = Color(1, 1, 1, 1)
+interactable_color = Color(1.1, 1.1, 1.1, 1)
+depleted_color = Color(0.45, 0.45, 0.45, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rock")
 
-[node name="Visual" type="ColorRect" parent="."]
-offset_left = -18.0
-offset_top = -28.0
-offset_right = 18.0
-offset_bottom = 0.0
-color = Color(0.6, 0.6, 0.65, 1)
+[node name="Visual" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+texture = ExtResource("2_rock_texture")
 
 [node name="InteractionIndicator" type="ColorRect" parent="."]
 offset_left = -20.0
-offset_top = -36.0
+offset_top = -44.0
 offset_right = 20.0
-offset_bottom = -32.0
+offset_bottom = -40.0
 color = Color(1, 1, 1, 1)
 
 [node name="ProgressBar" type="ColorRect" parent="."]
 offset_left = -20.0
-offset_top = -44.0
+offset_top = -52.0
 offset_right = 20.0
-offset_bottom = -38.0
+offset_bottom = -46.0
 color = Color(0, 0, 0, 1)
 
 [node name="Fill" type="ColorRect" parent="ProgressBar"]

@@ -62,8 +62,8 @@ func initialize(grid_pos: Vector2i) -> void:
 	current_health = max_health
 	is_destroyed = false
 	
-	# Set world position based on grid position
-	global_position = Building_System.grid_to_world(grid_pos)
+	# Align the structure to the center of its full footprint, not just the top-left cell.
+	global_position = Building_System.get_placement_world_position(grid_pos, grid_size)
 	
 	# Register with Building_System
 	Building_System.register_structure(grid_pos, self)

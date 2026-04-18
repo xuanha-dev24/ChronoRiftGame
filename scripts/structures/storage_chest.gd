@@ -54,7 +54,7 @@ func _on_body_exited(body: Node2D) -> void:
 		player_in_range = false
 		if interaction_indicator:
 			interaction_indicator.visible = false
-		# TODO: Close chest UI if open
+		EventBus.storage_chest_closed.emit()
 
 ## Initialize chest inventory with empty slots
 func initialize_inventory() -> void:
@@ -100,6 +100,54 @@ func remove_item(slot_index: int) -> Dictionary:
 	print("[StorageChest] Removed %s from slot %d" % [item_data["item_id"], slot_index])
 	return item_data
 
+func set_item(slot_index: int, item_data: Dictionary) -> bool:
+	if slot_index < 0 or slot_index >= INVENTORY_SIZE:
+		push_error("[StorageChest] Invalid slot index: %d" % slot_index)
+		return false
+
+	if item_data.is_empty():
+		chest_inventory[slot_index] = null
+		return true
+
+	var item_id := str(item_data.get("item_id", item_data.get("id", "")))
+	var quantity := int(item_data.get("quantity", 0))
+	if item_id.is_empty() or quantity <= 0:
+		chest_inventory[slot_index] = null
+		return true
+
+	chest_inventory[slot_index] = {
+		"item_id": item_id,
+		"quantity": quantity
+	}
+	return true
+
+func clear_slot(slot_index: int) -> bool:
+	return set_item(slot_index, {})
+
+func move_item_to_slot(from_index: int, to_index: int) -> bool:
+	if from_index < 0 or from_index >= INVENTORY_SIZE:
+		return false
+	if to_index < 0 or to_index >= INVENTORY_SIZE:
+		return false
+	if from_index == to_index:
+		return false
+
+	var source_item = chest_inventory[from_index]
+	if source_item == null:
+		return false
+
+	var target_item = chest_inventory[to_index]
+	if target_item == null:
+		chest_inventory[to_index] = source_item
+		chest_inventory[from_index] = null
+	elif target_item.get("item_id", "") == source_item.get("item_id", ""):
+		target_item["quantity"] += int(source_item.get("quantity", 0))
+		chest_inventory[from_index] = null
+	else:
+		chest_inventory[to_index] = source_item
+		chest_inventory[from_index] = target_item
+	return true
+
 ## Get item data at given slot
 func get_item(slot_index: int) -> Dictionary:
 	if slot_index < 0 or slot_index >= INVENTORY_SIZE:
@@ -109,7 +157,7 @@ func get_item(slot_index: int) -> Dictionary:
 	if chest_inventory[slot_index] == null:
 		return {}
 	
-	return chest_inventory[slot_index]
+	return chest_inventory[slot_index].duplicate(true)
 
 ## Check if inventory is full
 func is_inventory_full() -> bool:
@@ -123,7 +171,6 @@ func open_chest_ui() -> void:
 	"""Open the chest inventory UI"""
 	EventBus.storage_chest_opened.emit(self)
 	print("[StorageChest] Chest inventory opened (20 slots)")
-	# TODO: Display chest inventory UI (Phase 4)
 
 ## Override destroy to drop all items
 func destroy() -> void:

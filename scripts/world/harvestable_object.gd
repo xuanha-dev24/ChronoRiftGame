@@ -31,7 +31,7 @@ var gathering_timer: float = 0.0
 var respawn_timer: float = 0.0
 
 # Node references (will be assigned in _ready)
-@onready var visual: ColorRect = $Visual
+@onready var visual: CanvasItem = $Visual
 @onready var interaction_indicator: ColorRect = $InteractionIndicator
 @onready var progress_bar: ColorRect = $ProgressBar
 @onready var progress_fill: ColorRect = $ProgressBar/Fill
@@ -59,6 +59,8 @@ func _ready() -> void:
 		push_error("[HarvestableObject] Missing CollisionShape2D node")
 		queue_free()
 		return
+
+	_ensure_interaction_shape()
 	
 	# Randomize gathering and respawn times for variety
 	gathering_time = randf_range(1.0, 3.0)
@@ -74,6 +76,14 @@ func _ready() -> void:
 	update_visual_state()
 	interaction_indicator.visible = false
 	progress_bar.visible = false
+
+
+func _ensure_interaction_shape() -> void:
+	var circle_shape := collision_shape.shape as CircleShape2D
+	if circle_shape == null:
+		circle_shape = CircleShape2D.new()
+		collision_shape.shape = circle_shape
+	circle_shape.radius = interaction_range
 
 
 func _process(delta: float) -> void:
@@ -112,27 +122,32 @@ func transition_to_state(new_state: State) -> void:
 	update_visual_state()
 
 
+func _apply_visual_state(color: Color, alpha: float) -> void:
+	if visual is ColorRect:
+		var color_rect := visual as ColorRect
+		color_rect.color = color
+		color_rect.modulate.a = alpha
+		return
+	visual.modulate = Color(color.r, color.g, color.b, alpha)
+
+
 func update_visual_state() -> void:
 	"""Update visual appearance based on current state"""
 	match current_state:
 		State.NORMAL:
-			visual.color = normal_color
-			visual.modulate.a = 1.0
+			_apply_visual_state(normal_color, 1.0)
 			interaction_indicator.visible = false
 			collision_shape.disabled = false
 		State.INTERACTABLE:
-			visual.color = interactable_color
-			visual.modulate.a = 1.0
+			_apply_visual_state(interactable_color, 1.0)
 			interaction_indicator.visible = true
 			collision_shape.disabled = false
 		State.GATHERING:
-			visual.color = interactable_color
-			visual.modulate.a = 1.0
+			_apply_visual_state(interactable_color, 1.0)
 			interaction_indicator.visible = false
 			collision_shape.disabled = false
 		State.DEPLETED:
-			visual.color = depleted_color
-			visual.modulate.a = 0.5
+			_apply_visual_state(depleted_color, 0.5)
 			interaction_indicator.visible = false
 			collision_shape.disabled = true
 
@@ -193,7 +208,7 @@ func complete_gathering() -> void:
 	var amount = randi_range(min_resource_amount, max_resource_amount)
 	
 	# Validate resource_type is one of the valid types
-	var valid_types = ["wood", "stone", "meat"]
+	var valid_types = ["wood", "stone", "gold", "meat"]
 	if not resource_type in valid_types:
 		print("[HarvestableObject] Invalid resource type: %s" % resource_type)
 		# Still transition to depleted state even if resource type is invalid

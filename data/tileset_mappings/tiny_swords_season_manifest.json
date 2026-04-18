@@ -1,0 +1,11 @@
+{
+  "default": "color2",
+  "tile_size": 32,
+  "mappings": {
+    "color1": "res://data/tileset_mappings/tiny_swords_color1_map.json",
+    "color2": "res://data/tileset_mappings/tiny_swords_color2_map.json",
+    "color3": "res://data/tileset_mappings/tiny_swords_color3_map.json",
+    "color4": "res://data/tileset_mappings/tiny_swords_color4_map.json",
+    "color5": "res://data/tileset_mappings/tiny_swords_color5_map.json"
+  }
+}

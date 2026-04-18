@@ -48,15 +48,23 @@ func load_game() -> bool:
 	return true
 
 func get_player_data() -> Dictionary:
-	# TODO: Collect player data
+	if Player_Inventory != null and Player_Inventory.has_method("get_save_data"):
+		return Player_Inventory.get_save_data()
 	return {}
 
 func get_world_data() -> Dictionary:
-	# TODO: Collect world data
+	var current_scene := get_tree().current_scene
+	if current_scene != null and current_scene.has_method("get_world_save_data"):
+		return current_scene.get_world_save_data()
 	return {}
 
 func apply_save_data(data: Dictionary) -> void:
-	# TODO: Apply loaded data to game
+	if data.has("player") and Player_Inventory != null and Player_Inventory.has_method("load_from_save_data"):
+		Player_Inventory.load_from_save_data(data["player"])
+
+	var current_scene := get_tree().current_scene
+	if data.has("world") and current_scene != null and current_scene.has_method("load_world_save_data"):
+		current_scene.load_world_save_data(data["world"])
 	
 	# Load structures if present
 	if data.has("structures"):

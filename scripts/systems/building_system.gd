@@ -206,6 +206,12 @@ func grid_to_world(grid_pos: Vector2i) -> Vector2:
 		grid_pos.y * GRID_SIZE + GRID_SIZE / 2.0
 	)
 
+func get_placement_world_position(grid_pos: Vector2i, grid_size: Vector2i = Vector2i.ONE) -> Vector2:
+	return Vector2(
+		(grid_pos.x + grid_size.x * 0.5) * GRID_SIZE,
+		(grid_pos.y + grid_size.y * 0.5) * GRID_SIZE
+	)
+
 ## Get world mouse position (convert from viewport to world coordinates)
 func _get_world_mouse_position() -> Vector2:
 	var viewport = get_viewport()
@@ -229,12 +235,59 @@ func _get_world_mouse_position() -> Vector2:
 	
 	return world_pos
 
+func _get_dynamic_build_bounds() -> Rect2i:
+	var scene_root = _get_scene_root()
+	if scene_root == null:
+		return Rect2i(0, 0, MAP_SIZE, MAP_SIZE)
+
+	var loaded_chunks_variant: Variant = scene_root.get("loaded_chunks")
+	var chunk_size: int = int(scene_root.get("chunk_size"))
+	var tile_size: int = int(scene_root.get("tile_size"))
+	if not (loaded_chunks_variant is Dictionary) or chunk_size <= 0 or tile_size <= 0:
+		return Rect2i(0, 0, MAP_SIZE, MAP_SIZE)
+
+	var loaded_chunks: Dictionary = loaded_chunks_variant
+	if loaded_chunks.is_empty():
+		return Rect2i(0, 0, MAP_SIZE, MAP_SIZE)
+
+	var chunk_grid_span: int = int(ceil(float(chunk_size * tile_size) / float(GRID_SIZE)))
+	var min_cell_x: int = 2147483647
+	var min_cell_y: int = 2147483647
+	var max_cell_x: int = -2147483648
+	var max_cell_y: int = -2147483648
+
+	for chunk_info_variant in loaded_chunks.values():
+		if not (chunk_info_variant is Dictionary):
+			continue
+		var chunk_info: Dictionary = chunk_info_variant
+		var coords_variant: Variant = chunk_info.get("coords", {})
+		if not (coords_variant is Dictionary):
+			continue
+		var coords: Dictionary = coords_variant
+		var chunk_x: int = int(coords.get("x", 0))
+		var chunk_y: int = int(coords.get("y", 0))
+		var start_cell := Vector2i(
+			int(floor(float(chunk_x * chunk_size * tile_size) / float(GRID_SIZE))),
+			int(floor(float(chunk_y * chunk_size * tile_size) / float(GRID_SIZE)))
+		)
+		var end_cell := start_cell + Vector2i(chunk_grid_span, chunk_grid_span)
+		min_cell_x = min(min_cell_x, start_cell.x)
+		min_cell_y = min(min_cell_y, start_cell.y)
+		max_cell_x = max(max_cell_x, end_cell.x)
+		max_cell_y = max(max_cell_y, end_cell.y)
+
+	if min_cell_x == 2147483647:
+		return Rect2i(0, 0, MAP_SIZE, MAP_SIZE)
+
+	return Rect2i(min_cell_x, min_cell_y, max_cell_x - min_cell_x, max_cell_y - min_cell_y)
+
 ## Check if all grid cells occupied by structure are within map bounds
 func is_within_bounds(grid_pos: Vector2i, grid_size: Vector2i) -> bool:
+	var build_bounds := _get_dynamic_build_bounds()
 	for x in range(grid_size.x):
 		for y in range(grid_size.y):
 			var cell = grid_pos + Vector2i(x, y)
-			if cell.x < 0 or cell.x >= MAP_SIZE or cell.y < 0 or cell.y >= MAP_SIZE:
+			if not build_bounds.has_point(cell):
 				return false
 	return true
 
@@ -304,9 +357,10 @@ func update_preview_position(mouse_pos: Vector2) -> void:
 	
 	# Convert mouse position to grid coordinates
 	var grid_pos = world_to_grid(mouse_pos)
+	var snapped_world_pos = get_placement_world_position(grid_pos, grid_size)
 	
 	# Update preview position (snapped to grid)
-	placement_preview.update_position(mouse_pos)
+	placement_preview.update_position(snapped_world_pos)
 	
 	# Validate placement at this position
 	var validation = validate_placement(grid_pos, grid_size)

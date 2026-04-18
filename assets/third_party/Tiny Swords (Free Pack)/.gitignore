@@ -1,0 +1,9 @@
+# Ignore macOS helper files
+__MACOSX/
+.DS_Store
+
+# Thumbs / Windows
+Thumbs.db
+
+# Optional: ignore Aseprite source if you don't want to commit
+# *.aseprite

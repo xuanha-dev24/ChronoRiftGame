@@ -9,10 +9,15 @@ extends CanvasLayer
 @onready var hotbar = $Hotbar
 @onready var inventory_counter = $InfoPanel/InventoryCounter
 @onready var resource_display = $InfoPanel/ResourceDisplay
+@onready var time_label: Label = $InfoPanel/TimeLabel
+@onready var fps_label: Label = $InfoPanel/FPSLabel
+
+var world_manager: WorldManager = null
 
 func _ready() -> void:
 	# Verify all components exist
 	_verify_components()
+	world_manager = _get_world_manager()
 	
 	# Connect to EventBus signals
 	_connect_signals()
@@ -22,6 +27,7 @@ func _ready() -> void:
 	
 	# Initialize displays
 	_initialize_displays()
+	set_process(true)
 	
 	print("[HUD] Initialized successfully")
 
@@ -39,6 +45,10 @@ func _verify_components() -> void:
 		push_error("[HUD] InventoryCounter component not found!")
 	if not resource_display:
 		push_error("[HUD] ResourceDisplay component not found!")
+	if not time_label:
+		push_error("[HUD] TimeLabel component not found!")
+	if not fps_label:
+		push_error("[HUD] FPSLabel component not found!")
 
 func _connect_signals() -> void:
 	"""Connect EventBus signals to handler methods."""
@@ -68,11 +78,14 @@ func _connect_signals() -> void:
 	if Player_Inventory.inventory_updated.connect(_on_inventory_updated) != OK:
 		push_error("[HUD] Failed to connect inventory_updated signal")
 
+	if EventBus.day_night_cycle_changed.connect(_on_day_night_cycle_changed) != OK:
+		push_error("[HUD] Failed to connect day_night_cycle_changed signal")
+
 func _initialize_displays() -> void:
 	"""Initialize all displays with default/current values."""
 	# Initialize inventory counter
 	if inventory_counter:
-		var item_count = Player_Inventory.inventory.size()
+		var item_count = Player_Inventory.get_used_slot_count()
 		inventory_counter.update_count(item_count, 30)
 	
 	# Initialize resource display
@@ -80,6 +93,43 @@ func _initialize_displays() -> void:
 		for resource_type in ["fire_shard", "gold", "stone", "wood", "meat"]:
 			var amount = ResourceManager.get_resource(resource_type)
 			resource_display.update_resource(resource_type, amount)
+
+	_update_time_display()
+	_update_fps_display()
+
+func _process(_delta: float) -> void:
+	_update_fps_display()
+
+func _get_world_manager() -> WorldManager:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	var scene_root := tree.current_scene
+	if scene_root == null:
+		return null
+	return scene_root.get_node_or_null("WorldManager") as WorldManager
+
+func _update_time_display() -> void:
+	if not time_label:
+		return
+	if world_manager == null:
+		world_manager = _get_world_manager()
+	if world_manager == null:
+		time_label.text = "Time: --:--"
+		return
+	time_label.text = "Time: %s (%s)" % [world_manager.get_clock_time_string(), world_manager.get_time_phase_name()]
+
+func _update_fps_display() -> void:
+	if not fps_label:
+		return
+	var fps: int = Engine.get_frames_per_second()
+	fps_label.text = "FPS: %d" % fps
+	if fps >= 55:
+		fps_label.modulate = Color(0.80, 1.0, 0.82, 1.0)
+	elif fps >= 30:
+		fps_label.modulate = Color(1.0, 0.92, 0.62, 1.0)
+	else:
+		fps_label.modulate = Color(1.0, 0.70, 0.70, 1.0)
 
 # Signal handlers
 
@@ -123,8 +173,11 @@ func _on_hotbar_changed(slot_index: int, item_data: Dictionary) -> void:
 func _on_inventory_updated() -> void:
 	"""Update inventory counter when items are added/removed."""
 	if inventory_counter:
-		var item_count = Player_Inventory.inventory.size()
+		var item_count = Player_Inventory.get_used_slot_count()
 		inventory_counter.update_count(item_count, 30)
+
+func _on_day_night_cycle_changed(_time_of_day: float) -> void:
+	_update_time_display()
 
 func _on_viewport_size_changed() -> void:
 	"""Handle window resize to reposition UI elements."""

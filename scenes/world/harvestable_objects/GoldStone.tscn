@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/harvestable_object.gd" id="1_gold"]
+[ext_resource type="Script" path="res://scripts/world/variant_sprite_2d.gd" id="2_gold_visual"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 1.png" id="3_gold_1"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 2.png" id="4_gold_2"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 3.png" id="5_gold_3"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 4.png" id="6_gold_4"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 5.png" id="7_gold_5"]
+[ext_resource type="Texture2D" path="res://assets/third_party/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Resources/Gold/Gold Stones/Gold Stone 6.png" id="8_gold_6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gold"]
+radius = 16.0
+
+[node name="GoldStone" type="Area2D"]
+script = ExtResource("1_gold")
+resource_type = "gold"
+min_resource_amount = 20
+max_resource_amount = 35
+normal_color = Color(1, 1, 1, 1)
+interactable_color = Color(1.1, 1.1, 1.1, 1)
+depleted_color = Color(0.45, 0.45, 0.45, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gold")
+
+[node name="Visual" type="Sprite2D" parent="."]
+script = ExtResource("2_gold_visual")
+position = Vector2(0, -10)
+variant_textures = [ExtResource("3_gold_1"), ExtResource("4_gold_2"), ExtResource("5_gold_3"), ExtResource("6_gold_4"), ExtResource("7_gold_5"), ExtResource("8_gold_6")]
+randomize_frame = false
+
+[node name="InteractionIndicator" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -36.0
+color = Color(1, 1, 1, 1)
+
+[node name="ProgressBar" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -48.0
+offset_right = 20.0
+offset_bottom = -42.0
+color = Color(0, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="ProgressBar"]
+layout_mode = 0
+offset_right = 0.0
+offset_bottom = 6.0
+color = Color(0, 1, 0, 1)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/variant_sprite_2d.gd" id="1_variant"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_0.png" id="2_bush_0"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_1.png" id="3_bush_1"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_2.png" id="4_bush_2"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_3.png" id="5_bush_3"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_4.png" id="6_bush_4"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_5.png" id="7_bush_5"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_6.png" id="8_bush_6"]
+[ext_resource type="Texture2D" path="res://assets/placeholder/decorations/bushes/bushe1_7.png" id="9_bush_7"]
+
+[node name="DecorBushProp" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+script = ExtResource("1_variant")
+position = Vector2(0, -12)
+scale = Vector2(0.5, 0.5)
+variant_textures = [ExtResource("2_bush_0"), ExtResource("3_bush_1"), ExtResource("4_bush_2"), ExtResource("5_bush_3"), ExtResource("6_bush_4"), ExtResource("7_bush_5"), ExtResource("8_bush_6"), ExtResource("9_bush_7")]
+randomize_frame = false
+randomize_flip_h = true
